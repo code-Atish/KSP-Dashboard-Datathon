@@ -2,7 +2,7 @@
 # Police Performance and Resource Management 🚔📊
 <br/>
 
-## Karnatka State Police Hackathon - 2024
+## Karnataka State Police Hackathon - 2024
 
 <br/>
 
