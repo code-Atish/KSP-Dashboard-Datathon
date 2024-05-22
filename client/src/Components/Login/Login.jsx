@@ -27,7 +27,7 @@ const loginUser = (e) => {
 
 e.preventDefault();
 
-  Axios.post('http://localhost:5000/login', {
+  Axios.post('/api/login', {
     //creating variable to send to server through the route
     LoginUsername: loginusername,
     LoginPassword: loginpassword
