@@ -27,7 +27,7 @@ const loginUser = (e) => {
 
 e.preventDefault();
 
-  Axios.post('/api/login', {
+  Axios.post('https://ksp-backend.vercel.app/api/login', {
     //creating variable to send to server through the route
     LoginUsername: loginusername,
     LoginPassword: loginpassword
