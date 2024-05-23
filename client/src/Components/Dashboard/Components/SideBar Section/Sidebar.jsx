@@ -14,7 +14,7 @@ import { PiTrendUp } from "react-icons/pi";
 import { GrUserPolice } from "react-icons/gr";
 import { IoBag } from "react-icons/io5";
 import { BsQuestionCircle } from "react-icons/bs";
-
+import {   NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   return (
@@ -32,85 +32,101 @@ const Sidebar = () => {
             <ul className="menuLists grid">
 
                 <li className="listItem">
-                    <a href="#" className='menuLink flex'>
+                    <NavLink to={'/dashboard/Home'} 
+                        className={({ isActive, isPending }) =>
+                        isActive
+                          ? "active menuLink flex"
+                          : isPending
+                          ? "menuLink flex"
+                          : "menuLink flex"
+                      }    
+                    >
                     <IoMdSpeedometer className="icon" /> 
                     <span className="smallText">
                         Dashboard
                     </span>
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li className="listItem">
-                    <a href="#" className='menuLink flex'>
+                    <NavLink to={'inspectors'} 
+                    className={({ isActive, isPending }) =>
+                    isActive
+                      ? "active menuLink flex"
+                      : isPending
+                      ? ""
+                      : "menuLink flex"
+                  }    
+                    >
                     <GrUserPolice className="icon" /> 
                     <span className="smallText">
-                        Inspector Sub-inspector
+                    Officers
                     </span>
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li className="listItem">
-                    <a href="#" className='menuLink flex'>
-                    <FaLocationCrosshairs  className="icon" /> 
+                    <NavLink to={'location'} className={({ isActive, isPending }) =>
+                        isActive
+                          ? "active menuLink flex"
+                          : isPending
+                          ? "menuLink flex"
+                          : "menuLink flex"
+                      } >
+                    <FaLocationCrosshairs className="icon" /> 
                     <span className="smallText">
-                        Stations
+                        Location
                     </span>
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li className="listItem">
-                    <a href="#" className='menuLink flex'>
+                    <NavLink to={'details'} className={({ isActive, isPending }) =>
+                        isActive
+                          ? "active menuLink flex"
+                          : isPending
+                          ? "menuLink flex"
+                          : "menuLink flex"
+                      } >
+                    <AiOutlinePieChart className="icon" /> 
+                    <span className="smallText">
+                        Profile
+                    </span>
+                    </NavLink>
+                </li>
+                
+               
+                <li className="listItem">
+                    <NavLink to={'firdetails'} className={({ isActive, isPending }) =>
+                        isActive
+                          ? "active menuLink flex"
+                          : isPending
+                          ? "menuLink flex"
+                          : "menuLink flex"
+                      } >
+                    <PiTrendUp  className="icon" /> 
+                    <span className="smallText">
+                        Fir Details
+                    </span>
+                    </NavLink>
+                </li>
+                <li className="listItem">
+                    <NavLink to={'about'} className={({ isActive, isPending }) =>
+                        isActive
+                          ? "active menuLink flex"
+                          : isPending
+                          ? "menuLink flex"
+                          : "menuLink flex"
+                      } >
                     <BsTrophyFill className="icon" /> 
                     <span className="smallText">
                         Explore
                     </span>
-                    </a>
+                    </NavLink>
                 </li>
 
-            </ul>
-        </div>
 
-        <div className="settingsDiv">
-            <h3 className="divTitle">
-                SETTINGS
-            </h3>
-            <ul className="menuLists grid">
-
-                <li className="listItem">
-                    <a href="#" className='menuLink flex'>
-                    <AiOutlinePieChart className="icon" /> 
-                    <span className="smallText">
-                        Charts
-                    </span>
-                    </a>
-                </li>
-
-                <li className="listItem">
-                    <a href="#" className='menuLink flex'>
-                    <MdOutlineExplore className="icon" /> 
-                    <span className="smallText">
-                        Live camera feed
-                    </span>
-                    </a>
-                </li>
-
-                <li className="listItem">
-                    <a href="#" className='menuLink flex'>
-                    <PiTrendUp  className="icon" /> 
-                    <span className="smallText">
-                        Alert level
-                    </span>
-                    </a>
-                </li>
-
-                <li className="listItem">
-                    <a href="#" className='menuLink flex'>
-                    <GrUserPolice className="icon" /> 
-                    <span className="smallText">
-                        Personalization
-                    </span>
-                    </a>
-                </li>
+               
 
             </ul>
         </div>

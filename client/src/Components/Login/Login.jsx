@@ -12,9 +12,14 @@ import { GiRank3 } from "react-icons/gi";
 import { AiOutlineSwapRight } from "react-icons/ai";
 import Axios from 'axios'
 
+import toast from 'react-hot-toast'
+import { useAuth } from '../../AuthContext'
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Login = () => {
 //usestate hook to store imputs 
+const { isAuthenticated, setIsAuthenticated,user,setUser } = useAuth();
 const[loginusername, setLoginUsername] = useState("")
 const[loginpassword, setLoginPassword] = useState("")
 const navigateTo = useNavigate()
@@ -24,36 +29,67 @@ const [statusHolder, setstatusHolder] = useState('message')
 
 
 const loginUser = (e) => {
-
+  let loadingToastId;
 e.preventDefault();
-
-  Axios.post('https://ksp-backend.vercel.app/api/login', {
+loadingToastId = toast.loading("Signing In");
+  Axios.post(`${apiUrl}/login`, {
     //creating variable to send to server through the route
     LoginUsername: loginusername,
     LoginPassword: loginpassword
   }).then((response) => {
-   console.log()
-
-   if(response.data.message){
-    navigateTo('/')
-    setLoginStatus(`Credentials don't match`)
-   }
-   else{
-    navigateTo('/dashboard')
-   }
-   
+    toast.success("Succesfully logged In")
+     toast.dismiss(loadingToastId);
+  //  console.log(response.data)
+    localStorage.setItem("token",response.data.jwtToken);
+      setIsAuthenticated(true);   
+      setUser(response.data.user)
+      // console.log(response.data.user)
+  //  if(response.data.message){
+  //   console.log(response);
+  //   navigateTo('/')
+  //   setLoginStatus(`Credentials don't match`)
+  //  }
+  //  else{
+  //   navigateTo('/dashboard/Home')
+  //  }
+  })
+  .catch((error)=>{
+    toast.dismiss(loadingToastId);
+    toast.error(error.response.data.message);
   })
 }
 
-useEffect(() => {
-  if(loginStatus !==''){
-    setstatusHolder('showMessage')
-    setTimeout(() => {
-      setstatusHolder('message')
-    },4000);
+// useEffect(() => {
+//   if(loginStatus !==''){
+//     setstatusHolder('showMessage')
+//     setTimeout(() => {
+//       setstatusHolder('message')
+//     },4000);
 
+//   }
+// }, [loginStatus])
+useEffect(()=>{
+  if(isAuthenticated){
+      switch (user.rank) {
+          case 'ACP':
+            navigateTo('/dashboard/Home');
+            break;
+          case 'Inspector':
+            // navigateTo('/inspector');
+            navigateTo('/inspector');
+            break;
+          case 'Subinspector':
+            // navigateTo('/subinspector');
+            navigateTo('/subinspector');
+            break;
+          default:
+            // Redirect to default dashboard or handle other cases
+            navigateTo('/dashboard');
+            break;
+        }
+    // navigateTo('/dashboard/Home');
   }
-}, [loginStatus])
+},[isAuthenticated])
 
   return (
     <div className= 'loginPage flex'>
@@ -86,7 +122,6 @@ useEffect(() => {
 
           <form action="" className='form grid'>
             <span className={statusHolder}>{loginStatus}</span>
-
             <div className="inputDiv">
               <label htmlFor= "username">Username</label>
               <div className="input flex">
@@ -121,7 +156,7 @@ useEffect(() => {
               <AiOutlineSwapRight  className='icon'/>
             </button>
 
-            <a href="/dashboard">Dashboard</a>
+    
         
 
             <span className='forgotPassword'>

@@ -32,8 +32,8 @@ const powerbi = () => {
             id="powerBIReport"
             title="ksptestpowerbi"
             width="1150"
-            height="530"
-            src="https://app.powerbi.com/reportEmbed?reportId=eaa8deec-f8ae-47fd-846d-08ec0b9cc1d1&autoAuth=true&ctid=aa74b0a8-dc31-4e56-b78a-68531b73a97b&filterPaneEnabled=false&navContentPaneEnabled=false"
+            height="900"
+            src="https://app.powerbi.com/reportEmbed?reportId=40c2a340-0f97-4297-902f-638e74731f28&autoAuth=true&ctid=aa74b0a8-dc31-4e56-b78a-68531b73a97b&filterPaneEnabled=false&navContentPaneEnabled=false"
             frameBorder="0"
             allowFullScreen
             onLoad={handleIframeLoad}

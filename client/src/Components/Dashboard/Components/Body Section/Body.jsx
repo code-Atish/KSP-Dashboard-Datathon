@@ -7,12 +7,12 @@ import Powerbi from './Powerbi/Powerbi'
 
 const Body = () => {
   return (
-    <div className='mainContent'>
+    <>
       <Top/>
       <div className="bottom flex">
       <Powerbi/>
       </div>
-    </div>
+    </>
   ) 
 }
 

@@ -9,26 +9,44 @@ import logo from '../../LoginAssets/logo.png'
 
 
 import { BsFillShieldLockFill } from "react-icons/bs";
-import { AiOutlineSwapRight } from "react-icons/ai";
+import {  AiOutlineSwapRight } from "react-icons/ai";
 import { MdMarkEmailRead } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
+import toast from 'react-hot-toast'
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Register = () => {
 //usestate for input
 const[email, setEmail] = useState("")
 const[username, setUsername] = useState("")
 const[password, setPassword] = useState("")
+const[rank, setRank] = useState("")
 
+const [isPending,setIspending] = useState(false)
 //onclick for taking user input
-const createUser = () => {
-  Axios.post('http://localhost:5000/register', {
-    //creating variable to send to server through the route
-    Email: email,
-    Username: username,
-    Password: password
-  }).then(() => {
-    console.log('User has been created')
-  })
+const createUser = async (e) => {
+  e.preventDefault();
+  let loadingToastId;
+  try {
+    loadingToastId = toast.loading("Processing");
+     setIspending(prev=>!prev);
+    const res = await Axios.post(`${apiUrl}/register`, {
+     //creating variable to send to server through the route
+     Email: email,
+     Username: username,
+     Password: password,
+    Rank:rank
+   })
+   if (res.statusText=="OK")
+   toast.success(res.data.message)
+  toast.dismiss(loadingToastId);
+} catch (error) {
+  // toast.error(res.data.error)
+  toast.dismiss(loadingToastId);
+  toast.error(error.response.data.error)
+} finally{
+    setIspending(prev=>!prev);
+   }
 }
 
   return (
@@ -48,7 +66,7 @@ const createUser = () => {
 
         <div className="footerDiv flex">
           <span className="text">Already have an account ?</span>
-          <Link to={"/"}>
+          <Link to={"/login"}>
           <button className='btn'>Login</button>
           </Link>
         </div>
@@ -93,8 +111,19 @@ const createUser = () => {
               </div>
             </div>
 
+            <div className="inputDiv">
+              <label htmlFor= "rank">Rank</label>
+              <div className="input flex">
+              <BsFillShieldLockFill className='icon'/>
+                <input type="text" id="rank" placeholder='Enter Rank' onChange={(event)=>{
+                  setRank(event.target.value)
+                }} />
+              </div>
+            </div>
+
             <button type='submit' className='btn flex' onClick={createUser}>
-              <span>Register</span>
+              {!isPending && <span> Register </span>}
+              {isPending && <span> Processing </span>}
               <AiOutlineSwapRight  className='icon'/>
 
             </button>
