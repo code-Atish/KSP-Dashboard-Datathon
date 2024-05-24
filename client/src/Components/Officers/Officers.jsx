@@ -6,6 +6,7 @@ import {
   useLoaderData,
 } from "react-router-dom";
 import { useFetchData } from '../FirDetails/Firdetails';
+import Loader from '../../ui/Dropdown/Loader';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 export async function loader() {
@@ -43,7 +44,7 @@ const { data : officers, isLoading, error } = useFetchData(`${apiUrl}/getofficer
   }
   });
   if (isLoading) {
-      return <p>Loading data...</p>;
+      return <Loader/>;
     }
   
     if (error) {

@@ -21,21 +21,71 @@ import MapComponent from './Components/Map/MapComponent';
 import Map2 from './Components/Map/Map2';
 import LandingPage from './Pages/Homepage/Landingpage';
 import FirTable from './Components/FirDetails/Firdetails';
+import DetailedFir from './Components/FirDetails/DetailedFir';
 import Details from './Components/Details/Details';
 import SubordinateDetails from './Components/SubordinateDetails/Details/Details';
 import OfficersList from './Components/Officers/OfficersList';
+import FirList from './Components/FirDetails/FirList';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 // Define the ProtectedRoute component
+function useFetchData(url,config) {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(url,config);
+        setData(response.data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+  };
+  fetchData();
+  }, [url]);
+
+  return { data, isLoading, error };
+}
+
 const ProtectedRoute = ({ element: Element }) => {
   // Check authentication status here (dummy logic for demonstration)
   // const [isAuthenticated,setIsAuthenticated]=useState(false)
-
+  let isValid=false
 
   // const isAuthenticated = localStorage.getItem("token") !== null;
-const { isAuthenticated } = useAuth();
+const { isAuthenticated,user, setUser,setIsAuthenticated } = useAuth();
+
+const jwt_token = localStorage.getItem("token");
+if (isAuthenticated && jwt_token){
+  isValid = true;
+}
+ else if(!isAuthenticated && jwt_token){
+   const { data  , isLoading, error} = useFetchData(`${apiUrl}/verify`,{
+     headers : {
+       "jwt_token" : localStorage.getItem('token')
+     }
+   })
+    
+   if(isLoading || !data)  {
+    console.log(isLoading)
+     return <div> verifying...</div>
+   }
+   if(error){
+    isValid = false
+   }
+   if(data){
+    isValid = true
+    setIsAuthenticated(true)
+   }
+   
+}
 
 
-  const jwt_token = localStorage.getItem("token");
   // useEffect(()=>{
   //  const verifyUser= async () =>{
   //   try {
@@ -55,7 +105,7 @@ const { isAuthenticated } = useAuth();
   // })
 
   // If authenticated, render the provided element; otherwise, render an unauthorized message
-  return (isAuthenticated ? Element : <Navigate to="/" />); // Use Navigate for createBrowserRouter
+  return (isValid ? Element : <Navigate to="/" />); // Use Navigate for createBrowserRouter
 
 };
 
@@ -122,8 +172,18 @@ const router = createBrowserRouter([
       {
         path: "firdetails",
         // loader: FirLoader,
-        element: <div><FirTable/></div>,
+        element: <div><FirList/></div>,
         // element: <Details/>,
+        children : [
+          {
+            element : <FirTable/>,
+            index: true
+          },
+          {
+            path: ":FirNo/:FirYear",
+            element : <DetailedFir/>,
+          }
+        ]
       },
     ],
   },
@@ -165,8 +225,18 @@ const router = createBrowserRouter([
       {
         path: "firdetails",
         // loader: FirLoader,
-        element: <div><FirTable/></div>,
+        element: <div><FirList/></div>,
         // element: <Details/>,
+        children : [
+          {
+            element : <FirTable/>,
+            index: true
+          },
+          {
+            path: ":FirNo/:FirYear",
+            element : <DetailedFir/>,
+          }
+        ]
       },
     ]
   },
@@ -210,8 +280,18 @@ const router = createBrowserRouter([
       {
         path: "firdetails",
         // loader: FirLoader,
-        element: <div><FirTable/></div>,
+        element: <div><FirList/></div>,
         // element: <Details/>,
+        children : [
+          {
+            element : <FirTable/>,
+            index: true
+          },
+          {
+            path: ":FirNo/:FirYear",
+            element : <DetailedFir/>,
+          }
+        ]
       },
     ]
   }

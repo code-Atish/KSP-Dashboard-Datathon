@@ -137,3 +137,28 @@
     }
   }
   
+
+  .detailed_fir_bg_wrapper{
+    background-color:white;
+    padding: 1rem;
+  }
+
+  .detailed_fir_container{
+    display: grid;
+    /* grid-template-columns: repeat(12,minmax(0,1fr)) */
+    grid-template-columns: repeat(2,1fr);
+    gap: 1.5rem;
+  }
+  .detailed_fir_cont{
+    display: flex;
+    flex-direction: column;
+  }
+  .fir_col_heading{
+    padding :10px 15px;
+  }
+  .fir_col_content{
+    padding :10px 15px;
+    color : rgba(9, 69, 166, 0.74);
+    background-color: #f7f9fc;
+    border-radius: 5px;
+  }

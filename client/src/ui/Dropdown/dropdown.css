@@ -168,3 +168,9 @@
     transform: translateX(0);
   }
 }
+
+.loading_screen{
+  height: 100vh;
+  display:grid;
+  place-items: center;
+}

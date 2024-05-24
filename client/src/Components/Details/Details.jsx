@@ -3,6 +3,7 @@ import userSix from "./Inspector.png";
 import styles from "./index.module.css";
 import ChartOne, { useFetchData } from "./ChartOne";
 import { countElements,policeRanks } from "../../utils/utility";
+import Loader from "../../ui/Dropdown/Loader";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Details() {
@@ -26,7 +27,7 @@ export default function Details() {
   ); // Replace with your API endpoint
   // console.log(officerData)
   if (isLoading & isNameLoading) {
-    return <p>Loading data...</p>;
+    return <Loader/>;
   }
 
   if (error) {

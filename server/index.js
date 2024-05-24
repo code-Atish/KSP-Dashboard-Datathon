@@ -145,6 +145,30 @@ app.get("/api/verify", authorize, (req, res) => {
       res.status(500).send("Server error");
     }
   });
+  
+  app.post("/api/getfirdetails_withid",authorize, async (req, res) => {
+    // const SQL = `SELECT "FirNo","UnitName",year,fir_stage,"Complaint_Mode",place_of_offence,"Fir_Date","FIR_Type" FROM firdetails WHERE user_id = $1 limit $2`;
+    const SQL = `SELECT "FirNo",district,"UnitName","beat_name",ioname,year,"Fir_Date",fir_stage,"FIR_Type","Complaint_Mode","CrimeGroup_Name","CrimeHead_Name","ActSection",place_of_offence,distance_from_ps FROM firdetails WHERE "FirNo" = $1 and user_id= $2`;
+    const values = [req.body.FirNo, req.user.id];
+    // console.log('user id '  ,req.user)
+    // const values = [req.user.id];
+
+    try {
+        const result = await pool.query(SQL, values);
+        // if (result.rows.length === 0) {
+        //     return res.status(401).send({message : "No Firdetails found"});
+        // }
+    console.log(result.rows)
+
+        res.send(result.rows)
+        // console.log(result.rows)
+        // res.send(usernames)
+        
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error");
+    }
+  });
 
 
   app.post('/api/getdata',authorize, async (req, res) => {

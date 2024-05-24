@@ -30,6 +30,16 @@ const powerbi = () => {
     <div>
       <iframe
         id="powerBIReport"
+        title="Inspector Dashboard"
+        width="1100"
+        height="530"
+        src="https://app.powerbi.com/view?r=eyJrIjoiODk0YTEwZTUtYzNkZC00ZDViLTkzZTMtNzI5NGNlNTEwNDY2IiwidCI6ImI1MzYyMTYxLTgyMWEtNDk3Mi04NGEwLTg2ZGQzNjA2OGVkOCJ9"
+        frameborder="0"
+        allowFullScreen="true"
+        onLoad={handleIframeLoad}
+      ></iframe>
+      {/* <iframe
+        id="powerBIReport"
         title="ksptestpowerbi"
         width="1150"
         height="530"
@@ -37,7 +47,7 @@ const powerbi = () => {
         frameBorder="0"
         allowFullScreen
         onLoad={handleIframeLoad}
-      ></iframe>
+      ></iframe> */}
     </div>
   );
 };

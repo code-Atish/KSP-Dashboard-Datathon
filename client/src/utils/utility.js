@@ -37,6 +37,15 @@ const policeRanks = {
     "PSI": "Police Sub-Inspector",
     "HC" : "Head Constable"
 };
+function formatString(str) {
+    // Remove underscores and replace them with spaces
+    let result = str.split('_').join(' ');
+    result = result.charAt(0).toUpperCase() + result.slice(1);
 
-
-export {getRandomColor,countElements,policeRanks}
+    // Add spaces before uppercase letters (not preceded by a space)
+    result = result.replace(/([a-z])([A-Z])/g, '$1 $2');
+  
+    return result;
+  }
+  
+export {getRandomColor,countElements,policeRanks,formatString}

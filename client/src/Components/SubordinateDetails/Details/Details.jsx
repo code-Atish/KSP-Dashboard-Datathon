@@ -5,6 +5,7 @@ import ChartOne, { useFetchData } from "../Details/ChartOne";
 // import { countElements,policeRanks } from "../../utils/utility";
 import { useParams } from "react-router-dom";
 import { countElements,policeRanks } from "../../../utils/utility";
+import Loader from "../../../ui/Dropdown/Loader";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function SubordinateDetails() {
@@ -33,7 +34,7 @@ export default function SubordinateDetails() {
   ); // Replace with your API endpoint
   // console.log(officerData)
   if (isLoading & isNameLoading) {
-    return <p>Loading data...</p>;
+    return <Loader/>;
   }
 
   if (error) {

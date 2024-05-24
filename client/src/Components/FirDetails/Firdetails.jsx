@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./firdetails.module.css";
 import inspector from "../Officers/subInspectors/subInspector.png";
-import { useLoaderData, useNavigation } from "react-router-dom";
+import { Link, useLoaderData, useNavigation } from "react-router-dom";
 import axios from "axios";
+import Loader from "../../ui/Dropdown/Loader";
 const apiUrl = import.meta.env.VITE_API_URL;
 // import Top from './Top Section/Top'
 // import Listing from './Listing Section/Listing'
@@ -115,7 +116,7 @@ const FirTable = () => {
           }
         
           if (!data) {
-            return <p>Loading data...</p>;
+            return <Loader/>;
           }
           // console.log(data)
           const colHeader=data.length>0 ? Object.keys(data[0]) : []
@@ -203,7 +204,8 @@ const FirTable = () => {
               </div>
 
               <div className={styles.brand_visitor_revenue}>
-                <button className={styles.inspector_details}>View Details</button>
+                {/* <button className={styles.inspector_details} >View Details</button> */}
+                <Link to={`${fir.FirNo}`} className={styles.inspector_details}>View Details</Link>
               </div>
             </div>
           ))}

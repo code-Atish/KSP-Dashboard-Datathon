@@ -38,12 +38,22 @@ const powerbi = () => {
             allowFullScreen
             onLoad={handleIframeLoad}
           ></iframe> */}
-      <iframe
+      {/* <iframe
         id="powerBIReport"
         title="inspectordashboard"
         width="1150"
         height="900"
         src="https://app.powerbi.com/view?r=eyJrIjoiODk0YTEwZTUtYzNkZC00ZDViLTkzZTMtNzI5NGNlNTEwNDY2IiwidCI6ImI1MzYyMTYxLTgyMWEtNDk3Mi04NGEwLTg2ZGQzNjA2OGVkOCJ9"
+        frameborder="0"
+        allowFullScreen="true"
+        onLoad={handleIframeLoad}
+      ></iframe> */}
+      <iframe
+        id="powerBIReport"
+        title="SubInspector Dashboard"
+        width="1150"
+        height="900"
+        src="https://app.powerbi.com/view?r=eyJrIjoiMDExMDEyMDctZThkMi00NzMxLWI1NzctYTM1Nzk1ZTBmOTI4IiwidCI6ImI1MzYyMTYxLTgyMWEtNDk3Mi04NGEwLTg2ZGQzNjA2OGVkOCJ9"
         frameborder="0"
         allowFullScreen="true"
         onLoad={handleIframeLoad}
