@@ -1,6 +1,8 @@
 import {  useEffect, useState } from 'react';
 import './App.css'
 import Body from './Components/Dashboard/Components/Body Section/Body';
+import InspectorBody from './Components/InspectorDash/Components/Body Section/Body';
+import SubinspectorBody from './Components/SubInspectorDash/Components/Body Section/Body';
 import Dashboard from './Components/Dashboard/Dashboard'
 import Login from './Components/Login/Login'  
 import Register from './Components/Regsiter/Register'
@@ -21,6 +23,7 @@ import LandingPage from './Pages/Homepage/Landingpage';
 import FirTable from './Components/FirDetails/Firdetails';
 import Details from './Components/Details/Details';
 import SubordinateDetails from './Components/SubordinateDetails/Details/Details';
+import OfficersList from './Components/Officers/OfficersList';
 
 // Define the ProtectedRoute component
 const ProtectedRoute = ({ element: Element }) => {
@@ -77,15 +80,27 @@ const router = createBrowserRouter([
     element: <ProtectedRoute    element = {<Dashboard />} />,
     children: [
       {
-        path: "Home",
+        path: "home",
         // index: true,
         element: <Body />,
       },
       {
-        path: "inspectors",
+        path: "officers",
         // element: <div>hello world</div>,
-        element: <Officers />,
-        // loader: OfficersLoader
+        // element: <Officers />,
+        // loader: OfficersLoader,
+        element : <OfficersList/>,
+        children : [
+          {
+            path: "officerdetails/:id",
+            element: <div><SubordinateDetails/></div>
+          },
+          {
+            // path: "officerdetails/:id",
+            element: <div><Officers/></div>,
+            index : true
+          }
+        ]
       },
       {
         path: "checkout",
@@ -110,19 +125,95 @@ const router = createBrowserRouter([
         element: <div><FirTable/></div>,
         // element: <Details/>,
       },
-      {
-        path: "officerdetails/:id",
-        element: <div><SubordinateDetails/></div>
-      }
     ],
   },
   {
     path: "/inspector",
-    element: <div><InspectorDash/></div>,
+    element: <div><ProtectedRoute element={<InspectorDash/>}/></div>,
+    children: [
+      {
+        index: true, 
+        path: 'home',
+        element : <InspectorBody/>
+      },
+      {
+        path: "officers",
+        // element: <div>hello world</div>,
+        // element: <Officers />,
+        // loader: OfficersLoader,
+        element : <OfficersList/>,
+        children : [
+          {
+            path: "officerdetails/:id",
+            element: <div><SubordinateDetails/></div>
+          },
+          {
+            // path: "officerdetails/:id",
+            element: <div><Officers/></div>,
+            index : true
+          }
+        ]
+      }, 
+      {
+        path: "location",
+        element: <div><Map2/></div>,
+      },
+      {
+        path: "profile",
+        element: <div><Details/></div>,
+      },
+      {
+        path: "firdetails",
+        // loader: FirLoader,
+        element: <div><FirTable/></div>,
+        // element: <Details/>,
+      },
+    ]
   },
   {
     path: "/subinspector",
-    element: <div><SubinspectorDash/></div>,
+    element: <div><ProtectedRoute    element = {<SubinspectorDash />} /></div>,
+    
+    children: [
+      {
+        // index: true,
+        path: 'home',
+        element : <SubinspectorBody/>
+      },
+      {
+        path: "officers",
+        // element: <div>hello world</div>,
+        // element: <Officers />,
+        // loader: OfficersLoader,
+        element : <OfficersList/>,
+        children : [
+          {
+            path: "officerdetails/:id",
+            element: <div><SubordinateDetails/></div>
+          },
+          {
+            // path: "officerdetails/:id",
+            element: <div><Officers/></div>,
+            index : true
+          }
+        ]
+      },
+      , 
+      {
+        path: "location",
+        element: <div><Map2/></div>,
+      },
+      {
+        path: "profile",
+        element: <div><Details/></div>,
+      },
+      {
+        path: "firdetails",
+        // loader: FirLoader,
+        element: <div><FirTable/></div>,
+        // element: <Details/>,
+      },
+    ]
   }
 
 ]);

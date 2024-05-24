@@ -100,7 +100,7 @@ const Inspectors = ({ piArray ,title}) => {
               </div> */}
 
               <div className="brand-visitor-revenue">
-                <Link to={`/dashboard/officerdetails/${pi.id}`} className="inspector-details">View Details</Link>
+                <Link to={`officerdetails/${pi.id}`} className="inspector-details">View Details</Link>
               </div>
             </div>
           ))}

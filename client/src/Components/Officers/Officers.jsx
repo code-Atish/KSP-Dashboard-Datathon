@@ -53,6 +53,10 @@ const { data : officers, isLoading, error } = useFetchData(`${apiUrl}/getofficer
     if (!officers) {
       return <p>No data available.</p>;
     }
+
+    if (officers.length==0){
+      return <div>No Offier data found.</div>
+    }
 // Separate entries based on the rank
 officers.forEach(item => {
   if (item.rank === 'ASI'|| item.rank === 'PSI') {

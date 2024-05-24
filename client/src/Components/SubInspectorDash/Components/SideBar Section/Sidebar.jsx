@@ -32,7 +32,7 @@ const Sidebar = () => {
             <ul className="menuLists grid">
 
                 <li className="listItem">
-                    <NavLink to={'/dashboard/Home'} 
+                    <NavLink to={'/subinspector/home'} 
                         className={({ isActive, isPending }) =>
                         isActive
                           ? "active menuLink flex"
@@ -49,7 +49,7 @@ const Sidebar = () => {
                 </li>
 
                 <li className="listItem">
-                    <NavLink to={'inspectors'} 
+                    <NavLink to={'officers'} 
                     className={({ isActive, isPending }) =>
                     isActive
                       ? "active menuLink flex"
@@ -66,7 +66,7 @@ const Sidebar = () => {
                 </li>
 
                 <li className="listItem">
-                    <NavLink to={'profile'} className={({ isActive, isPending }) =>
+                    <NavLink to={'location'} className={({ isActive, isPending }) =>
                         isActive
                           ? "active menuLink flex"
                           : isPending
@@ -81,7 +81,7 @@ const Sidebar = () => {
                 </li>
 
                 <li className="listItem">
-                    <NavLink to={'details'} className={({ isActive, isPending }) =>
+                    <NavLink to={'profile'} className={({ isActive, isPending }) =>
                         isActive
                           ? "active menuLink flex"
                           : isPending
@@ -90,14 +90,14 @@ const Sidebar = () => {
                       } >
                     <AiOutlinePieChart className="icon" /> 
                     <span className="smallText">
-                        Charts
+                        Profile
                     </span>
                     </NavLink>
                 </li>
                 
             
                 <li className="listItem">
-                    <NavLink to={'about'} className={({ isActive, isPending }) =>
+                    <NavLink to={'firdetails'} className={({ isActive, isPending }) =>
                         isActive
                           ? "active menuLink flex"
                           : isPending
@@ -106,7 +106,7 @@ const Sidebar = () => {
                       } >
                     <PiTrendUp  className="icon" /> 
                     <span className="smallText">
-                        Alert Levels
+                        Fir Details
                     </span>
                     </NavLink>
                 </li>

@@ -32,7 +32,7 @@ const Sidebar = () => {
             <ul className="menuLists grid">
 
                 <li className="listItem">
-                    <NavLink to={'/dashboard/Home'} 
+                    <NavLink to={'/dashboard/home'} 
                         className={({ isActive, isPending }) =>
                         isActive
                           ? "active menuLink flex"
@@ -49,7 +49,7 @@ const Sidebar = () => {
                 </li>
 
                 <li className="listItem">
-                    <NavLink to={'inspectors'} 
+                    <NavLink to={'officers'} 
                     className={({ isActive, isPending }) =>
                     isActive
                       ? "active menuLink flex"

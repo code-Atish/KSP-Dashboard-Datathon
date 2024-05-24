@@ -99,7 +99,7 @@ const Inspectors = ({asiArray}) => {
 
               <div className="brand-visitor-revenue">
                 {/* <button className="inspector-details">View Details</button> */}
-                <Link to={`/dashboard/officerdetails/${asi.id}`} className="inspector-details">View Details</Link>
+                <Link to={`officerdetails/${asi.id}`} className="inspector-details">View Details</Link>
               </div>
             </div>
           ))}

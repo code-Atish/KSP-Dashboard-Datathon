@@ -1,0 +1,15 @@
+.sample_cred_wrapper{
+    display: flex;
+    gap:2em;
+    padding-top:1rem
+}
+.sample_cred{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+
+.sample_cred > button{
+padding : 5px 15px;
+border-radius: 10px;
+}

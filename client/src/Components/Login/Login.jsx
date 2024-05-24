@@ -72,15 +72,15 @@ useEffect(()=>{
   if(isAuthenticated){
       switch (user.rank) {
           case 'ACP':
-            navigateTo('/dashboard/Home');
+            navigateTo('/dashboard/home');
             break;
           case 'Inspector':
             // navigateTo('/inspector');
-            navigateTo('/inspector');
+            navigateTo('/inspector/home');
             break;
           case 'Subinspector':
             // navigateTo('/subinspector');
-            navigateTo('/subinspector');
+            navigateTo('/subinspector/home');
             break;
           default:
             // Redirect to default dashboard or handle other cases
@@ -93,6 +93,40 @@ useEffect(()=>{
 
   return (
     <div className= 'loginPage flex'>
+      <div className='sample_cred_wrapper'>
+        <div className='sample_cred'>
+          <div>
+          dy.SP login : 
+          </div>
+          <div>
+          ID: anjumala 
+          </div>
+         <div>  pass: 123 </div>
+         <button onClick={()=>{setLoginUsername('anjumala'),setLoginPassword('123')}}>Click Here!!</button>
+        </div>
+        <div className='sample_cred'>
+          <div>
+          Inspector login : 
+          </div>
+          <div>
+          ID: dharmendra 
+          </div>
+         <div>  pass: 123 </div>
+         <button onClick={()=>{setLoginUsername('dharmendra'),setLoginPassword('123')}}>Click Here!!</button>
+
+        </div>
+        <div className='sample_cred'>
+          <div>
+         Sub inspector login : 
+          </div>
+          <div>
+          ID: marutig
+          </div>
+         <div>  pass: 123 </div>
+         <button onClick={()=>{setLoginUsername('marutig'),setLoginPassword('123')}}>Click Here!!</button>
+
+        </div>
+      </div>
       <div className="container flex">
 
         <div className="videoDiv">
@@ -126,7 +160,7 @@ useEffect(()=>{
               <label htmlFor= "username">Username</label>
               <div className="input flex">
               <FaUserShield className='icon'/>
-                <input type="text" id="username" placeholder='Enter Username' onChange={(event)=>{
+                <input type="text" id="username" value={loginusername} placeholder='Enter Username' onChange={(event)=>{
                   setLoginUsername(event.target.value)
                 }}/>
               </div>
@@ -137,7 +171,7 @@ useEffect(()=>{
               <label htmlFor= "password">Password</label>
               <div className="input flex">
               <BsFillShieldLockFill className='icon'/>
-                <input type="password" id="password" placeholder='Enter Password' onChange={(event)=>{
+                <input type="password" id="password" value={loginpassword} placeholder='Enter Password' onChange={(event)=>{
                   setLoginPassword(event.target.value)
                 }}/>
               </div>
