@@ -47,5 +47,48 @@ function formatString(str) {
   
     return result;
   }
+const smapleFirValues = {
+    district: 'Bengaluru City',
+    UnitName: 'East Zone Women PS',
+    FirNo: '0001/2016',
+    RI: '1',
+    year: '2016',
+    Month: '1',
+    Offence_From_Date: '00:00.0',
+    Offence_To_Date: '00:00.0',
+    FIR_Reg_DateTime: '10:00.0',
+    Fir_Date: '07-13-2004',
+    FIR_Type: 'Non Heinous',
+    fir_stage: 'Pending Trial',
+    Complaint_Mode: 'Written',
+    CrimeGroup_Name: 'CRUELTY BY HUSBAND',
+    CrimeHead_Name: 'CRUELTY BY HUSBAND',
+    Latitude: '13.01528',
+    Longitude: '77.390757',
+    ActSection: 'IPC 1860 U/s: 498A,506',
+    IOName: 'ANJUMALA T NAYAK (Dy.SP)',
+    KGID: '1841136',
+    IOAssignment: 'NaN',
+    Internal_IO: '200045',
+    place_of_offence: 'NO 5TH MAIN 1ST CROSS SPANDANA LAYOUT NEXT MOHREE, NO 5TH MAIN 1ST CROSS SPANDANA LAYOUT NEXT MOHREE',
+    distance_from_ps: 'TOWORDS EAST 10 KM',
+    beat_name: 'EAST DIVISION 2',
+    village_area_name: 'BOWRING HOSPITAL',
+    male: '2123',
+    female: '1',
+    boy: '0',
+    girl: '0',
+    age_0: '0',
+    victim_count: '0',
+    accused_count: '1',
+    arrested_male: '1',
+    arrested_female: '0',
+    arrested_count_no: '1',
+    accused_chargesheeted_count: '1',
+    conviction_count: '0',
+    fir_id: '2016000001',
+    unit_id: '1978',
+    crime_no: '10443100000000000'
+  }
   
-export {getRandomColor,countElements,policeRanks,formatString}
+export {getRandomColor,countElements,policeRanks,formatString,smapleFirValues}

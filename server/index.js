@@ -137,7 +137,6 @@ app.get("/api/verify", authorize, (req, res) => {
         //     return res.status(401).send({message : "No Firdetails found"});
         // }
         res.send(result.rows)
-        console.log(result.rows)
         // res.send(usernames)
         
     } catch (err) {
@@ -145,7 +144,26 @@ app.get("/api/verify", authorize, (req, res) => {
       res.status(500).send("Server error");
     }
   });
-  
+  app.post('/api/addfir', authorize, async (req, res) => {
+    // Corrected SQL query with parameterized query
+    // const SQL = 'INSERT INTO users (email, username, password,rank) VALUES ($1, $2, $3, $4) RETURNING *';
+    // const SQL  = 'INSERT INTO firdetails (district, "FirNo", year, user_id) VALUES ($1, $2, $3, $4)'
+    const SQL=`INSERT INTO firdetails (district, "UnitName", "FirNo", "RI", year, "Month", "Offence_From_Date", "Offence_To_Date", "FIR_Reg_DateTime", "Fir_Date", "FIR_Type", "fir_stage", "Complaint_Mode", "CrimeGroup_Name", "CrimeHead_Name", "Latitude", "Longitude", "ActSection", IOName, "KGID", "IOAssignment", "Internal_IO", place_of_offence, distance_from_ps, beat_name, village_area_name, male, female, boy, girl, age_0, victim_count, accused_count, arrested_male, arrested_female, arrested_count_no, accused_chargesheeted_count, conviction_count, fir_id, unit_id, crime_no,user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42)`
+    const values = req.body.firValues;
+    values.push(req.user.id)
+    try {
+        const newFir = await pool.query(SQL, values);
+        // Executing parameterized query
+        // console.log(newUser.rows[0]);
+        // res.send({ message: 'User added' });
+        res.status(200).json({ message: 'Scuccessfully Fir registered' });
+    } catch (error) {
+        console.error('Error adding Fir:', error);
+        // res.status(500).send({ error: 'Error inserting user' });
+        console.log(error)
+        res.status(404).json({ error: 'Error occured while Adding Fir' });
+    }
+});
   app.post("/api/getfirdetails_withid",authorize, async (req, res) => {
     // const SQL = `SELECT "FirNo","UnitName",year,fir_stage,"Complaint_Mode",place_of_offence,"Fir_Date","FIR_Type" FROM firdetails WHERE user_id = $1 limit $2`;
     const SQL = `SELECT "FirNo",district,"UnitName","beat_name",ioname,year,"Fir_Date",fir_stage,"FIR_Type","Complaint_Mode","CrimeGroup_Name","CrimeHead_Name","ActSection",place_of_offence,distance_from_ps FROM firdetails WHERE "FirNo" = $1 and user_id= $2`;
@@ -158,8 +176,6 @@ app.get("/api/verify", authorize, (req, res) => {
         // if (result.rows.length === 0) {
         //     return res.status(401).send({message : "No Firdetails found"});
         // }
-    console.log(result.rows)
-
         res.send(result.rows)
         // console.log(result.rows)
         // res.send(usernames)

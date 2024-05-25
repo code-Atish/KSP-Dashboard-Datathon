@@ -26,6 +26,7 @@ import Details from './Components/Details/Details';
 import SubordinateDetails from './Components/SubordinateDetails/Details/Details';
 import OfficersList from './Components/Officers/OfficersList';
 import FirList from './Components/FirDetails/FirList';
+import AddFir from './Components/FirDetails/AddFir';
 const apiUrl = import.meta.env.VITE_API_URL;
 
 // Define the ProtectedRoute component
@@ -185,6 +186,11 @@ const router = createBrowserRouter([
           }
         ]
       },
+      {
+        path: "addfir",
+        element: <div><AddFir/></div>,
+        // element: <Details/>,
+      },
     ],
   },
   {
@@ -237,6 +243,11 @@ const router = createBrowserRouter([
             element : <DetailedFir/>,
           }
         ]
+      },
+      {
+        path: "addfir",
+        element: <div><AddFir/></div>,
+        // element: <Details/>,
       },
     ]
   },
@@ -292,6 +303,11 @@ const router = createBrowserRouter([
             element : <DetailedFir/>,
           }
         ]
+      },
+      {
+        path: "addfir",
+        element: <div><AddFir/></div>,
+        // element: <Details/>,
       },
     ]
   }

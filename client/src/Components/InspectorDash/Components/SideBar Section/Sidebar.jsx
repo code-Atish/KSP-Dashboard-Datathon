@@ -14,6 +14,7 @@ import { PiTrendUp } from "react-icons/pi";
 import { GrUserPolice } from "react-icons/gr";
 import { IoBag } from "react-icons/io5";
 import { BsQuestionCircle } from "react-icons/bs";
+import { FaWpforms } from "react-icons/fa";
 import {   NavLink } from "react-router-dom";
 
 const Sidebar = () => {
@@ -111,16 +112,16 @@ const Sidebar = () => {
                     </NavLink>
                 </li>
                 <li className="listItem">
-                    <NavLink to={'about'} className={({ isActive, isPending }) =>
+                    <NavLink to={'addfir'} className={({ isActive, isPending }) =>
                         isActive
                           ? "active menuLink flex"
                           : isPending
                           ? "menuLink flex"
                           : "menuLink flex"
                       } >
-                    <BsTrophyFill className="icon" /> 
+                    <FaWpforms className="icon" /> 
                     <span className="smallText">
-                        Explore
+                        Register Fir
                     </span>
                     </NavLink>
                 </li>
