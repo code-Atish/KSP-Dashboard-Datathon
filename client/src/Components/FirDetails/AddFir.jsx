@@ -34,7 +34,6 @@ const AddFir = () => {
     let loadingToastId;
 
     // Process the form data (e.g., send to a server)
-    console.log("Form Data Submitted:", Object.values(formData));
     try {
       loadingToastId = toast.loading("Processing");
       const res = await axios.post(
@@ -47,14 +46,12 @@ const AddFir = () => {
         }
       );
       if (res.statusText == "OK") {
-        setIsPending(false);
-        toast.success(res.data.message);
-        resetForm();
       }
-      console.log(res.data);
+      setIsPending(false);
+      toast.success(res.data.message);
+      resetForm();
       toast.dismiss(loadingToastId);
     } catch (error) {
-      console.log(error);
       setIsPending(false);
       toast.dismiss(loadingToastId);
       toast.error(error.response.data.error);
