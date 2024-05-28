@@ -1,0 +1,167 @@
+import Axios from "axios";
+import React, { useEffect, useState } from "react";
+import ReactApexChart from "react-apexcharts";
+import styles from './index.module.css'
+import {
+  countElements,
+  getRandomColor,
+  getconvictionRate,
+} from "../../utils/utility";
+// import FirStageSelect from './Select';
+var options = {
+  chart: {
+    height: 280,
+    type: "radialBar",
+  },
+
+//   series: [100],
+  colors: ["#20E647"],
+  plotOptions: {
+    radialBar: {
+      hollow: {
+        margin: 0,
+        size: "60%",
+        background: "#293450",
+      },
+      track: {
+        dropShadow: {
+          enabled: true,
+          top: 2,
+          left: 0,
+          blur: 4,
+          opacity: 0.15,
+        },
+      },
+      dataLabels: {
+        name: {
+          offsetY: -10,
+          color: "#fff",
+          fontSize: "13px",
+          show:false
+        },
+        value: {
+          color: "#fff",
+          fontSize: "30px",
+          show: true,
+        },
+      },
+    },
+  },
+  fill: {
+    type: "gradient",
+    gradient: {
+      shade: "dark",
+      type: "horizontal",
+      gradientToColors: ["#87D4F9"],
+      stops: [0, 100],
+    },
+  },
+  stroke: {
+    lineCap: "round",
+  },
+  labels: ["Progress"],
+//   responsive :  [
+//     {
+//       breakpoint: 2600,
+//       options: {
+//         chart: {
+//           width: 420,
+//         },
+//       },
+//     },
+//     {
+//       breakpoint: 640,
+//       options: {
+//         chart: {
+//           width: 200,
+//         },
+//       },
+//     },
+// ]
+};
+const responsiveOptions = [
+    {
+      breakpoint: 2600,
+      options: {
+        chart: {
+          width: 420,
+        },
+      },
+    },
+    {
+      breakpoint: 640,
+      options: {
+        chart: {
+          width: 200,
+        },
+      },
+    },
+]
+// Custom hook for data fetching with Axios
+export function useFetchData(url, variables, config) {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await Axios.post(url, variables, config);
+        setData(response.data);
+        // console.log(response.data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
+  return { data, isLoading, error };
+}
+
+export default function ConvictionChart({ series,label }) {
+  // const [firStageKeys,setFirStageKeys]=useState([])
+  // const [firStageValues,setFirStageValues]=useState([]);
+  const [sample, setSample] = useState([]);
+  // let firStageKeys;
+  // let firStageValues;
+  const [state, setState] = useState({
+    series: [65, 34, 11, 57],
+  });
+
+  const handleReset = () => {
+    setState((prevState) => ({
+      ...prevState,
+      series: [65, 34, 12, 56],
+    }));
+  };
+  handleReset;
+  // Replace with your API endpoint
+
+//   if (data.length < 1) return <div> No conviction data available.</div>;
+  return (
+    <div id="" className="">
+      <div className="conviction_info">
+        <h3 className={styles.perf_metric_label}>{label}</h3>
+        {/* <FirStageSelect/> */}
+      </div>
+      <div className="">
+        <ReactApexChart
+          options={{
+            ...options,
+            series: series,
+            labels: label,
+          }}
+          series={series}
+          type="radialBar"
+          // width={380}
+          height={280}
+        />
+      </div>
+    </div>
+  );
+}

@@ -3,11 +3,11 @@ import './top.scss'
 
 import { BiSearchAlt } from "react-icons/bi";
 import { TbMessageCircle } from "react-icons/tb";
-import { IoIosNotificationsOutline } from "react-icons/io";
 
 
 import img from '../../../Assets/admin.png'
 import DropdownMenu from '../../../../../ui/Dropdown/Dropdown';
+import Popup from '../../../../../ui/Popup/Popup';
 const Top = () => {
   return (
     <div className='topSection'>
@@ -24,7 +24,7 @@ const Top = () => {
 
         <div className="adminDiv flex">
           <TbMessageCircle className="icon"/>
-          <IoIosNotificationsOutline className="icon"/>
+          <Popup/>
 
           {/* <div className="adminImage">
             <img src={img} alt="Admin Image"/>

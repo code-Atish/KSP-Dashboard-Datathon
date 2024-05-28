@@ -1,6 +1,6 @@
 // src/MapComponent.js
 import React, { useState, useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { Icon } from "leaflet";
@@ -12,7 +12,7 @@ import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import SearchLocation from "./SearchLocation";
-
+import styles from './map.module.scss';
 const customIcon = new Icon({
   iconUrl: "client\public\Icons\location-pin.png",
   iconSize: [38, 38],
@@ -68,6 +68,7 @@ const MapComponent = ({
   setPosition,
   isLocationFound,
   userLocation,
+  hotspots
 }) => {
   return (
     <>
@@ -93,6 +94,23 @@ const MapComponent = ({
             destination={position}
           />
         )}
+        {hotspots.length>0 &&  hotspots.map((hotspot, index) => (
+        <Circle
+          key={index}
+          center={[hotspot.Latitude, hotspot.Longitude]}
+          radius={2000}
+          pathOptions={{ color: 'red' }}
+          className={styles.fade_circle}
+        >
+          <Popup>
+            <div>
+              <strong>{hotspot.village_area_name}</strong><br />
+              <strong>{hotspot.beat_name}</strong><br />
+              Crime Count: {hotspot.crimeCount}
+            </div>
+          </Popup>
+        </Circle>
+      ))}
       </MapContainer>
     </>
   );

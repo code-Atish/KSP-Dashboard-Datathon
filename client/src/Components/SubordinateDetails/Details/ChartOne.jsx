@@ -116,7 +116,6 @@ export default function ChartOne({data,isLoading,error}) {
   const activeCases= firStageValues[0]+firStageValues[1]
   const closedCases =  totalCases- activeCases
   return (
-    <div className="">
       <div id="chartThree" className="">
         <div className="donut_one_header">
           <h3>Fir Stages</h3>
@@ -134,6 +133,5 @@ export default function ChartOne({data,isLoading,error}) {
           />
         </div>
       </div>
-    </div>
   );
 }

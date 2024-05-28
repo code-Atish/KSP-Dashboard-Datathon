@@ -160,6 +160,7 @@ const router = createBrowserRouter([
       {
         path: "location",
         element: <div><Map2/></div>,
+        // loader: beatLoader
       },
       {
         path: "profile",

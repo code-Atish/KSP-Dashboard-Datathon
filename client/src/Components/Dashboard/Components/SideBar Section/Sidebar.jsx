@@ -71,7 +71,7 @@ const Sidebar = () => {
                         isActive
                           ? "active menuLink flex"
                           : isPending
-                          ? "menuLink flex"
+                          ? "active menuLink flex"
                           : "menuLink flex"
                       } >
                     <FaLocationCrosshairs className="icon" /> 

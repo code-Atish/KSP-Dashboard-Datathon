@@ -233,7 +233,7 @@ app.post('/api/getofficerinfo',authorize, async (req, res) => {
 });
 
   app.post('/api/getdata_withid',authorize, async (req, res) => {
-    const  id= req.body.id
+    const  id= req.body.id || req.user.id
     // console.log(officerName);
 
     // SQL query with parameterized query
@@ -256,7 +256,7 @@ app.post('/api/getofficerinfo',authorize, async (req, res) => {
 
 
 app.post('/api/getofficerinfo_withid',authorize, async (req, res) => {
-    const  id= req.body.id
+    const  id= req.body.id || req.user.id
     // console.log(officerName);
 
     // SQL query with parameterized query
@@ -277,5 +277,86 @@ app.post('/api/getofficerinfo_withid',authorize, async (req, res) => {
     }
 });
 
+app.post('/api/getconviction',authorize, async (req, res) => {
+    const  id= req.body.id || req.user.id
+    // console.log(officerName);
 
+    // SQL query with parameterized query
+    const SQL = 'SELECT accused_chargesheeted_count, conviction_count FROM firdetails WHERE accused_chargesheeted_count > 0 and conviction_count> 0 and user_id = $1 ';
+    const values = [id,];
+
+    try {
+        // Executing parameterized query
+        const result = await pool.query(SQL, values);
+            res.send(result.rows); // Send user data if found
+    } catch (error) {
+        console.error('Error getting info:', error);
+        res.status(500).send({ error: 'Error finding officer data' });
+    }
+});
+const substringsToRemove = ['Dist', 'Sub-Dist', 'Region','TOWN','City','PS'];
+function removeSubstringsFromTwoStrings(string1, string2) {
+    const removeSubstrings = (originalString) => {
+      let resultString = originalString;
+  
+      substringsToRemove.forEach(substring => {
+        const regex = new RegExp(substring, 'g');
+        resultString = resultString.replace(regex, '');
+      });
+  
+      return resultString.trim();
+    };
+  
+    const cleanedString1 = removeSubstrings(string1);
+    const cleanedString2 = removeSubstrings(string2);
+  
+    return `${cleanedString1}, ${cleanedString2}, India`
+}
+app.post('/api/getcrimehotspot',authorize, async (req, res) => {
+    const  id=  req.user.id
+    // console.log(officerName);
+
+    // SQL query with parameterized query
+    const SQL = 'SELECT beat_name, district, village_area_name,"Latitude","Longitude" from firdetails where  user_id = $1';
+    const values = [id,];
+
+    try {
+        // Executing parameterized quer
+        const result = await pool.query(SQL, values);
+        let newobj={}
+        result.rows.forEach(item=>{
+            if(!newobj[item.beat_name]?.crimeCount){
+                newobj[item.beat_name]={...item,
+                    crimeCount : (newobj[item.beat_name]?.crimeCount || 0)+ 1,
+                    location: removeSubstringsFromTwoStrings(item.village_area_name,item.district),
+                }
+            }
+            else {
+                newobj[item.beat_name]={...newobj[item.beat_name],crimeCount : (newobj[item.beat_name]?.crimeCount || 0)+ 1}
+            }
+        })
+        res.send(newobj); // Send user data if found
+    } catch (error) {
+        console.error('Error getting info:', error);
+        res.status(500).send({ error: 'Error finding officer data' });
+    }
+});
+
+app.post('/api/getresponsetime',authorize, async (req, res) => {
+    const  id= req.body.id || req.user.id
+    // console.log(officerName);
+
+    // SQL query with parameterized query
+    const SQL = 'SELECT CAST(AVG(response_time) AS INTEGER) as response_time from firdetails where user_id = $1 ';
+    const values = [id,];
+
+    try {
+        // Executing parameterized query
+        const result = await pool.query(SQL, values);
+            res.send(result.rows[0]); // Send user data if found
+    } catch (error) {
+        console.error('Error getting info:', error);
+        res.status(500).send({ error: 'Error finding officer data' });
+    }
+});
 module.exports = app

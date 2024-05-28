@@ -93,6 +93,23 @@
   width: 100%;
   text-align: center;
 }
+
+.perf_metric_wrapper{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  margin-top: 2rem;
+  gap: 2rem;
+}
+.perf_metric_ele {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  border: 2px solid var(--border-stoke)
+}
+.perf_metric_label{
+  text-align: center;
+}
+
 @media (min-width: 640px) {
   .profile_wrapper {
     padding: 0.75rem;

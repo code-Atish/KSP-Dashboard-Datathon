@@ -29,7 +29,39 @@ function countElements(array) {
     // Return the counts object
     return counts;
 }
+function getClearanceRate(array) {
+    // Create an empty object to store counts
+    let activeCaseCount=0;
+    let closedCaseCount=0;
+    const activeCase= ["Under Investigation"]
+    // Loop through the array
+    array.forEach(item => {
+        // If the item is not in the counts object, initialize its count to 1
+        // Otherwise, increment its count by 1
+        if(activeCase.includes(item.fir_stage)){
+            activeCaseCount = activeCaseCount + 1; 
+        }else {
+            closedCaseCount = closedCaseCount  + 1;
+        }
+    });
+    const clearanceRate =Math.round((closedCaseCount / (activeCaseCount + closedCaseCount )) * 100)
+    // Return the counts object
+    return {activeCaseCount,closedCaseCount, clearanceRate}
+}
 
+function getconvictionRate(data){
+    if(!data)
+        return 0
+    if (data.length < 1)
+        return 0
+    const dataLength = data.length
+    const sum = data.reduce(
+        (accumulator, currentValue) => accumulator + (currentValue.conviction_count/currentValue.accused_chargesheeted_count),
+        0
+      );
+    const convictionRate = Math.round((sum/dataLength) * 100)
+    return convictionRate > 100 ? 100 : convictionRate
+}
 const policeRanks = {
     "Dy.SP": "Deputy Superintendent of Police",
     "ASI": "Assistant Sub-Inspector",
@@ -91,4 +123,10 @@ const smapleFirValues = {
     crime_no: '10443100000000000'
   }
   
-export {getRandomColor,countElements,policeRanks,formatString,smapleFirValues}
+const config = {
+    headers: {
+      jwt_token: localStorage.getItem("token"),
+    },
+  }
+
+export {getRandomColor,countElements,policeRanks,formatString,smapleFirValues,getClearanceRate,getconvictionRate,config}

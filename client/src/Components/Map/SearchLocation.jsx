@@ -22,7 +22,7 @@ const SearchLocation = ({setPosition}) => {
             const { lat, lon } = response.data[0];
             setPosition([ lat, lon ]);
           } else {
-            console.log();('Location not found');
+            console.log('Location not found');
           }
         } catch (error) {
           console.error('Error fetching coordinates:', error);

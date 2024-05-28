@@ -65,7 +65,7 @@
 }
 .chart_wrapper {
   display: grid;
-  margin-top: 1rem;
+  margin-top: 2rem;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 1rem;
 }
@@ -79,21 +79,68 @@
 }
 
 .card{
-  padding: 2em 3em;
+  padding: 2em 1em;
   display: flex;
-  border-radius: 10px;
   flex-direction: column;
-  place-items: center;
+  /* place-items: center; */
   justify-content: center;
   background-color: #ffffff;
   --tw-shadow: 0px 8px 13px -3px rgba(0, 0, 0, 0.07);
   --tw-shadow-colored: 0px 8px 13px -3px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  border-radius: 15px;
 }
-.card > h3{
+.side_content> h2{
+  text-align: center;
+  font-size:30px;
   width: 100%;
   text-align: center;
 }
+.card_inner_wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+  height: 100%;
+  align-items: center;
+}
+.side_content > span{
+  color:rgb(100 116 139);
+  font-size:0.9rem;
+}
+.icon_wrapper{
+  padding:10px;
+  width: fit-content;
+  font-size:25px;
+  color:#3C50E0;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #EFF2F7;
+}
+.perf_metric_wrapper{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  margin-top: 2rem;
+  gap: 2rem;
+}
+.perf_metric_ele {
+  background-color: white;
+  padding: 30px;
+  /* border-radius: 10px; */
+  border: 2px solid var(--border-stoke);
+  --tw-shadow: 0px 8px 13px -3px rgba(0, 0, 0, 0.07);
+  --tw-shadow-colored: 0px 8px 13px -3px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+.perf_metric_label{
+  text-align: center;
+  color: var(--mauve-11);
+}
+
 @media (min-width: 640px) {
   .profile_wrapper {
     padding: 0.75rem;
