@@ -3,7 +3,7 @@ import SearchLocation from "./SearchLocation";
 import MapComponent from "./MapComponent";
 import axios from "axios";
 import { useFetchData } from "../Details/ChartOne";
-import { config } from "../../utils/utility";
+import { config, getCrimeHotspots } from "../../utils/utility";
 import Loader from "../../ui/Dropdown/Loader";
 import {
   useLoaderData,
@@ -123,7 +123,8 @@ export default function Map2() {
             "jwt_token" : localStorage.getItem('token')    
           }
         })
-        setBeatData(res.data)
+        
+        setBeatData(getCrimeHotspots(res.data))
       } catch (error) {
         console.log('error while fetching places data : ',error)
       }

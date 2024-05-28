@@ -79,6 +79,40 @@ function formatString(str) {
   
     return result;
   }
+
+  const substringsToRemove = ['Dist', 'Sub-Dist', 'Region','TOWN','City','PS'];
+  function removeSubstringsFromTwoStrings(string1, string2) {
+      const removeSubstrings = (originalString) => {
+        let resultString = originalString;
+    
+        substringsToRemove.forEach(substring => {
+          const regex = new RegExp(substring, 'g');
+          resultString = resultString.replace(regex, '');
+        });
+    
+        return resultString.trim();
+      };
+    
+      const cleanedString1 = removeSubstrings(string1);
+      const cleanedString2 = removeSubstrings(string2);
+    
+      return `${cleanedString1}, ${cleanedString2}, India`
+  }
+function getCrimeHotspots(data){
+    let newobj={}
+        data.forEach(item=>{
+            if(!newobj[item.beat_name]?.crimeCount){
+                newobj[item.beat_name]={...item,
+                    crimeCount : (newobj[item.beat_name]?.crimeCount || 0)+ 1,
+                    location: removeSubstringsFromTwoStrings(item.village_area_name,item.district),
+                }
+            }
+            else {
+                newobj[item.beat_name]={...newobj[item.beat_name],crimeCount : (newobj[item.beat_name]?.crimeCount || 0)+ 1}
+            }
+        })
+    return newobj
+}
 const smapleFirValues = {
     district: 'Bengaluru City',
     UnitName: 'East Zone Women PS',
@@ -129,4 +163,4 @@ const config = {
     },
   }
 
-export {getRandomColor,countElements,policeRanks,formatString,smapleFirValues,getClearanceRate,getconvictionRate,config}
+export {getRandomColor,countElements,policeRanks,formatString,smapleFirValues,getClearanceRate,getconvictionRate,config,getCrimeHotspots}
