@@ -93,7 +93,21 @@
       }
     }
   }
-  
+  .option_selector{
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    align-items: center;
+    gap:2rem;
+    padding: 5px 1.5rem;
+    margin: 1rem ;
+  }
+  .option_selector > select{
+    padding : 10px 15px;
+    background-color: white;
+    border: 0px;
+    border-radius: 5px;
+  }
   .fade_circle {
     animation: fadeInOut 3s infinite;
     transform: scale(1);

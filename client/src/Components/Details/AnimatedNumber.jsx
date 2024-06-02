@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const GetAnimatedNumber = ({ value, duration = 2000 }) => {
+const GetAnimatedNumber = ({ value,unit, duration = 2000 }) => {
   const [displayedValue, setDisplayedValue] = useState(0);
 
   useEffect(() => {
@@ -15,16 +15,15 @@ const GetAnimatedNumber = ({ value, duration = 2000 }) => {
         requestAnimationFrame(step);
       }
     };
-
     requestAnimationFrame(step);
   }, [value, duration]);
 
-  return Math.floor(displayedValue)
+  return `${Math.floor(displayedValue)}${unit ? unit : ''}`;
 };
 
 // Usage
-const AnimatedNumber = ({value, duration}) => {
-  return <GetAnimatedNumber value={value} duration={duration} />
+const AnimatedNumber = ({value,unit, duration}) => {
+  return <GetAnimatedNumber value={value} unit={unit} duration={duration} />
 };
 
 export default AnimatedNumber;

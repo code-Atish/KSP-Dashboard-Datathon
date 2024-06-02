@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
+import L, { routing } from "leaflet";
 import { Icon } from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
@@ -11,7 +11,6 @@ import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
-import SearchLocation from "./SearchLocation";
 import styles from './map.module.scss';
 const customIcon = new Icon({
   iconUrl: "client\public\Icons\location-pin.png",
@@ -24,51 +23,13 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-const NavigationControl = ({ userLocation, destination }) => {
-  const map = useMap();
-  const routingControlRef = useRef(null);
-  // console.log("userlocation ", userLocation);
-  // console.log("destination ", destination);
-  // const points = [
-  //   L.latLng(userLocation[0], userLocation[1]),
-  //   L.latLng(destination[0], destination[1]),
-  // ];
-  useEffect(() => {
-    if (destination && userLocation) {
-      // Remove previous routes
-      if (routingControlRef.current) {
-        routingControlRef.current.setWaypoints([]);
-      }
-
-      // Add new route
-      const routingControl = L.Routing.control({
-        waypoints: [
-          L.latLng(userLocation[0], userLocation[1]),
-          L.latLng(destination[0], destination[1]),
-        ],
-        // routeWhileDragging: false,
-        // geocoder: L.Control.Geocoder.nominatim(),
-        draggableWaypoints: false,
-      }).addTo(map);
-
-      // Store the routing control reference
-      routingControlRef.current = routingControl;
-
-      routingControl.on("routesfound", (e) => {
-        // console.log(e);
-      });
-    }
-  }, [userLocation, destination, map]);
-
-  return null;
-};
 
 const MapComponent = ({
-  position,
-  setPosition,
   isLocationFound,
   userLocation,
-  hotspots
+  hotspots,
+  selectedValue,
+  setRoutingControl
 }) => {
   return (
     <>
@@ -81,20 +42,21 @@ const MapComponent = ({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {userLocation && (
+        {/* {userLocation && (
           <Marker position={position}>
             <Popup>
               {isLocationFound ? "You are here" : "Central location of India"}
             </Popup>
           </Marker>
-        )}
-        {userLocation && position && (
+        )} */}
+        {/* {userLocation && position && selectedValue=="false" && (
           <NavigationControl
             userLocation={userLocation}
             destination={position}
+            setRoutingControl={setRoutingControl}
           />
-        )}
-        {hotspots.length>0 &&  hotspots.map((hotspot, index) => (
+        )} */}
+        {hotspots.length>0  && hotspots.map((hotspot, index) => (
         <Circle
           key={index}
           center={[hotspot.Latitude, hotspot.Longitude]}

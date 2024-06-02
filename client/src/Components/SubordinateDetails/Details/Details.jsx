@@ -14,7 +14,7 @@ import Loader from "../../../ui/Dropdown/Loader";
 import ConvictionChart from "../../Details/ConvictionChart";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { BsClipboard2CheckFill } from "react-icons/bs";
-import { FaListCheck } from "react-icons/fa6";
+import { FaGavel, FaListCheck, FaRegCircleCheck } from "react-icons/fa6";
 import { FaClipboardList } from "react-icons/fa";
 import AnimatedNumber from "../../Details/AnimatedNumber";
 import { FaUserClock } from "react-icons/fa";
@@ -60,7 +60,7 @@ export default function SubordinateDetails() {
   }
 
   if (!data) {
-    return <p>No data available.</p>;
+    return <Loader/>;
   }
   const convictionRate = getconvictionRate(convictionData);
   const { clearanceRate, activeCaseCount, closedCaseCount } =
@@ -120,6 +120,32 @@ export default function SubordinateDetails() {
               </div>
             </div>
         </div>
+        <div className={styles.perf_metric_ele}>
+          {/* <ConvictionChart series={[clearanceRate]} label={['Crime clearance']} /> */}
+        <h3 className={styles.perf_metric_label}>Conviction Rate</h3>
+          <div className={styles.card_inner_wrapper} >
+              <div className={styles.icon_wrapper}>
+                <FaGavel />
+              </div>
+              <div className={styles.side_content}>
+                {responseTimeData &&  <h2><AnimatedNumber value={convictionRate} unit={'%'}duration={1000} /></h2>}
+                {/* <span>Minutes</span> */}
+              </div>
+            </div>
+        </div>
+        <div className={styles.perf_metric_ele}>
+          {/* <ConvictionChart series={[clearanceRate]} label={['Crime clearance']} /> */}
+        <h3 className={styles.perf_metric_label}>Clearance Rate</h3>
+          <div className={styles.card_inner_wrapper} >
+              <div className={styles.icon_wrapper}>
+                <FaRegCircleCheck />
+              </div>
+              <div className={styles.side_content}>
+                {responseTimeData &&  <h2><AnimatedNumber value={clearanceRate} unit={'%'}duration={1000} /></h2>}
+                {/* <span>Minutes</span> */}
+              </div>
+            </div>
+        </div>
       </div>
       <div className={styles.chart_wrapper}>
         <div className={styles.char_one}>
@@ -144,7 +170,7 @@ export default function SubordinateDetails() {
               </div>
               <div className={styles.side_content}>
                 <h2>{closedCaseCount ? <AnimatedNumber value={closedCaseCount} duration={1000} /> : "No"}</h2>
-                <span>Closed Cases</span>
+                <span>Solved Cases</span>
               </div>
             </div>
           </div>

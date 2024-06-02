@@ -97,7 +97,8 @@
 .IconButton {
   font-family: inherit;
   border-radius: 100%;
-  height: 35px;
+  padding: 5px 12px;
+  height: 30px;
   /* width: 35px; */
   display: inline-flex;
   align-items: center;

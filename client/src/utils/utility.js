@@ -100,7 +100,7 @@ function formatString(str) {
   }
 function getCrimeHotspots(data){
     let newobj={}
-        data.forEach(item=>{
+        Object.values(data).forEach(item=>{
             if(!newobj[item.beat_name]?.crimeCount){
                 newobj[item.beat_name]={...item,
                     crimeCount : (newobj[item.beat_name]?.crimeCount || 0)+ 1,

@@ -1,5 +1,5 @@
 import React from "react";
-import "./index.css";
+import "../Inspectors/inspect.css";
 import inspector from "./subInspector.png";
 import { Link } from "react-router-dom";
 // import Top from './Top Section/Top'

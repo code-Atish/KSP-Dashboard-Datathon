@@ -70,12 +70,15 @@
   gap: 1rem;
 }
 .card_wrapper{
-  grid-column: span 6 / span 6;
+  grid-column: span 12 / span 12;
   display: grid;
   grid-template-columns: repeat(2,1fr);
 
   margin-top: 1rem;
   gap: 1rem;
+}
+.char_one{
+  grid-column: span 12 / span 12;
 }
 
 .card{
@@ -119,7 +122,32 @@
     right: 0.5rem;
     bottom: 0.5rem;
   }
+}
+@media (min-width: 900px) {
+  .profile_wrapper {
+    padding: 0.75rem;
+    height: 11rem;
+  }
+  .profile_label {
+    right: 0.5rem;
+    bottom: 0.5rem;
+  }
   .char_one{
     grid-column: span 6 / span 6;
   }
+  .card_wrapper{
+    grid-column: span 6 / span 6;
+  }
+}
+
+@media (max-width: 900px) {
+  .perf_metric_wrapper {
+    grid-template-columns: repeat(2,1fr);
+  }
+  /* .char_one{
+    grid-column: span 12 / span 12;
+  } */
+  /* .chart_wrapper{
+    grid-template-columns: 1 / -1;
+  } */
 }

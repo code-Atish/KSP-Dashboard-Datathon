@@ -5,6 +5,7 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
+    -webkit-tap-highlight-color: transparent;
 }
 
 :root{
@@ -469,13 +470,14 @@ img, video{
     width: 100%;
     justify-content: center;
     margin: auto;
-
+    
     .dashboardContainer{
         height: 95vh;
         width: 95%;
         border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 5px 10px rgb(194, 194, 194);
+        position: relative;
     }
 
 }

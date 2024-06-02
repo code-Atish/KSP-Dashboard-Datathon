@@ -1,7 +1,7 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import styles from './index.module.css'
+import styles from "./index.module.css";
 import {
   countElements,
   getRandomColor,
@@ -14,7 +14,7 @@ var options = {
     type: "radialBar",
   },
 
-//   series: [100],
+  //   series: [100],
   colors: ["#20E647"],
   plotOptions: {
     radialBar: {
@@ -37,7 +37,7 @@ var options = {
           offsetY: -10,
           color: "#fff",
           fontSize: "13px",
-          show:false
+          show: false,
         },
         value: {
           color: "#fff",
@@ -60,43 +60,74 @@ var options = {
     lineCap: "round",
   },
   labels: ["Progress"],
-//   responsive :  [
-//     {
-//       breakpoint: 2600,
-//       options: {
-//         chart: {
-//           width: 420,
-//         },
-//       },
-//     },
-//     {
-//       breakpoint: 640,
-//       options: {
-//         chart: {
-//           width: 200,
-//         },
-//       },
-//     },
-// ]
-};
-const responsiveOptions = [
+  responsive: [
     {
-      breakpoint: 2600,
+      breakpoint: 900,
       options: {
-        chart: {
-          width: 420,
+        plotOptions: {
+          radialBar: {
+            dataLabels: {
+              value: {
+                fontSize: "15px",
+              },
+            },
+            hollow: {
+              offsetY: -10,
+              margin: 0,
+              size: "50%",
+              background: "#293450",
+            },
+          },
         },
       },
     },
     {
-      breakpoint: 640,
+      breakpoint: 550,
       options: {
         chart: {
           width: 200,
+          height: 100
         },
       },
     },
-]
+  ],
+  //   responsive :  [
+  //     {
+  //       breakpoint: 2600,
+  //       options: {
+  //         chart: {
+  //           width: 420,
+  //         },
+  //       },
+  //     },
+  //     {
+  //       breakpoint: 640,
+  //       options: {
+  //         chart: {
+  //           width: 200,
+  //         },
+  //       },
+  //     },
+  // ]
+};
+const responsiveOptions = [
+  {
+    breakpoint: 2600,
+    options: {
+      chart: {
+        width: 420,
+      },
+    },
+  },
+  {
+    breakpoint: 640,
+    options: {
+      chart: {
+        width: 200,
+      },
+    },
+  },
+];
 // Custom hook for data fetching with Axios
 export function useFetchData(url, variables, config) {
   const [data, setData] = useState(null);
@@ -123,7 +154,7 @@ export function useFetchData(url, variables, config) {
   return { data, isLoading, error };
 }
 
-export default function ConvictionChart({ series,label }) {
+export default function ConvictionChart({ series, label }) {
   // const [firStageKeys,setFirStageKeys]=useState([])
   // const [firStageValues,setFirStageValues]=useState([]);
   const [sample, setSample] = useState([]);
@@ -142,7 +173,7 @@ export default function ConvictionChart({ series,label }) {
   handleReset;
   // Replace with your API endpoint
 
-//   if (data.length < 1) return <div> No conviction data available.</div>;
+  //   if (data.length < 1) return <div> No conviction data available.</div>;
   return (
     <div id="" className="">
       <div className="conviction_info">
@@ -158,8 +189,8 @@ export default function ConvictionChart({ series,label }) {
           }}
           series={series}
           type="radialBar"
-          // width={380}
-          height={280}
+          // // width={380}
+          // height={280}
         />
       </div>
     </div>

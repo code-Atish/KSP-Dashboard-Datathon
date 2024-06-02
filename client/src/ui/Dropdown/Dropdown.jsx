@@ -22,7 +22,7 @@ const { logout } = useAuth();
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button className="IconButton" aria-label="Customise options">
-          <HamburgerMenuIcon />
+          <ExitIcon />
         </button>
       </DropdownMenu.Trigger>
 

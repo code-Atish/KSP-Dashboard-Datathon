@@ -14,7 +14,7 @@ const Body = () => {
   }
   return (
     <>
-      <Top/>
+      {/* <Top/> */}
       <div className="bottom flex">
       <Powerbi/>
       </div>

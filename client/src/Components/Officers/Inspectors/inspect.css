@@ -79,6 +79,7 @@
     line-height: 30px;
     color:#343C6A;
     margin-bottom: 1.5rem;
+    margin-top: 3rem;
   }
 
 @media (min-width: 640px) {
@@ -111,5 +112,30 @@
   }
   .brand-visitor-revenue{
     padding: 1.25rem; 
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .table-wrapper {
+    padding-left: .625rem;
+    padding-right: .625rem;
+  }
+  .brand-logo-wrapper{
+    padding: 0 .5rem;
+  }
+  .brand-visitor-revenue, .brand-name{ 
+    font-size:0.85rem;
+    padding: 0.5rem;
+  }
+  .brand-logo-wrapper > div{
+    display: none;
+  }
+  .brand-name{
+    font-weight: bold;
+    color: #343C6A;
+    color:var(--mauve-11);
+  }
+  .inspector-title{
+    font-size: 22px;
   }
 }

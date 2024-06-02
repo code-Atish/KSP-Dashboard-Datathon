@@ -1,5 +1,6 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
+import styles from "./index.module.css";
 import ReactApexChart from "react-apexcharts";
 import { countElements, getRandomColor } from "../../utils/utility";
 // import FirStageSelect from './Select';
@@ -42,6 +43,14 @@ const options = {
     },
     {
       breakpoint: 640,
+      options: {
+        chart: {
+          width: 200,
+        },
+      },
+    },
+    {
+      breakpoint: 411,
       options: {
         chart: {
           width: 200,
@@ -122,8 +131,9 @@ export default function ChartOne({data,isLoading,error}) {
           <h3>Fir Stages</h3>
           {/* <FirStageSelect/> */}
         </div>
-        <div className="">
+        <div>
           <ReactApexChart
+            className={styles.donut_container}
             options={{
               ...options,
               labels: firStageKeys,

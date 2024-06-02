@@ -3,10 +3,11 @@
   --border-stoke: rgb(226, 232, 240);
   --bg-gray-2: rgb(247 249 252);
   --text-gray: #64748b;
+  --unread-color: #dc3545;
 }
 .notif_wrapper {
   position: relative;
-  transform: translateY(3px);
+  /* transform: translateY(2px); */
 }
 
 /* .notif_wrapper:hover .notif_cont{
@@ -14,7 +15,6 @@
     opacity: 1;
     pointer-events: all
 } */
-
 
 .notif_cont {
   position: absolute;
@@ -28,32 +28,43 @@
   border: 2px solid var(--border-stoke);
   border-top-width: 1px;
   overflow: auto;
-  transition: 0.2s cubic-bezier(0,0,0.3642,1);
+  transition: 0.2s cubic-bezier(0, 0, 0.3642, 1);
   transform: translateY(20px) scale(0.8);
   opacity: 0;
-  pointer-events: none
+  pointer-events: none;
 }
 
-.notif_cont.open{
-    transform: translateY(0) scale(1);
-    opacity: 1;
-    pointer-events: all
+.notif_cont.open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: all;
 }
 .notif_btn {
+  position: relative;
+  font-size: 25px;
+  color:gray;
+  padding:5px;
+  display: flex;
+  border-radius: 6px;
+  background:white;
+  border: 2px solid var(--border-stoke);
 }
 
+.notif_btn:hover{
+    background-color: rgb(226, 232, 240);
+}
 .notif_list_ele {
   padding: 10px;
   border-top: 2px solid var(--border-stoke);
   cursor: pointer;
 }
-.notif_ele{
+.notif_ele {
 }
-.notif_list_ele:hover{
-    background-color: var(--bg-gray-2);
+.notif_list_ele:hover {
+  background-color: var(--bg-gray-2);
 }
 .notif_cont:first-child {
-    border-top-color: violet;
+  border-top-color: violet;
 }
 
 .notif_ele > p {
@@ -64,4 +75,35 @@
 
 .notif_list_ele {
   list-style-type: none;
+}
+
+.unread_wrapper {
+  display: inline;
+  position: absolute;
+  top: -0.125rem;
+  right: -0.125rem;
+  border-radius: 9999px;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--unread-color);
+}
+
+.unread_background {
+  display: inline-flex;
+  position: absolute;
+  border-radius: 9999px;
+  /* top: -0.125rem;
+  right: -0.125rem; */
+  width: 100%;
+  height: 100%;
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  background-color: var(--unread-color);
+}
+/* PING */
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
 }

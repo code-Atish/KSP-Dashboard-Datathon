@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import { inject } from '@vercel/analytics';
 
  
-inject();
+// inject();
 ReactDOM.createRoot(document.getElementById('root')).render(
 <React.StrictMode>
 <Toaster

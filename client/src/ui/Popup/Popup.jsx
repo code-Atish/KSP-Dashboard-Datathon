@@ -41,9 +41,12 @@ export default function Popup() {
       setNotifying(false);
       setDropdownOpen(!dropdownOpen);
     }}>
-      <div className={styles.notif_btn}>
-        <IoIosNotificationsOutline className="icon" />
-      </div>
+      <button className={styles.notif_btn}>
+        <IoIosNotificationsOutline/>
+        <span className={styles.unread_wrapper}>
+        <span className={styles.unread_background}></span>
+        </span>
+      </button>
       <ul className={`${styles.notif_cont} ${ dropdownOpen === true ? styles.open : ''}`}
        ref={dropdown}
        onFocus={() => setDropdownOpen(true)}
@@ -54,13 +57,12 @@ export default function Popup() {
             >
               <p className="text-sm">
                 <span className="text-black dark:text-white">
-                  Edit your information in a swipe
+                Submit incident reports
                 </span>{' '}
-                Sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim.
+                 for cases #1234 and #5678 by end of day tomorrow, compile and log evidence, and ensure accurate paperwork submission.
               </p>
 
-              <p className="text-xs">12 May, 2025</p>
+              <p className="text-xs">12 May, 2024</p>
             </div>
           </li>
           <li className={styles.notif_list_ele}>
@@ -69,12 +71,26 @@ export default function Popup() {
             >
               <p className="text-sm">
                 <span className="text-black dark:text-white">
-                  It is a long established fact
+                Attend the neighborhood meeting
                 </span>{' '}
-                that a reader will be distracted by the readable.
+                Thursday at 19:00, visit Greenfield Elementary Friday morning, and engage with residents during patrols, documenting interactions.
               </p>
 
-              <p className="text-xs">24 Feb, 2025</p>
+              <p className="text-xs">24 Feb, 2024</p>
+            </div>
+          </li>
+          <li className={styles.notif_list_ele}>
+            <div
+              className={styles.notif_ele}
+            >
+              <p className="text-sm">
+                <span className="text-black dark:text-white">
+                Patrol Sector 5 from 08:00 to 16:00,
+                </span>{' '}
+                 monitor activities, ensure safety, and report incidents with a summary.
+              </p>
+
+              <p className="text-xs">04 Jan, 2024</p>
             </div>
           </li>
           <li className={styles.notif_list_ele}>
@@ -89,22 +105,7 @@ export default function Popup() {
                 suffered
               </p>
 
-              <p className="text-xs">04 Jan, 2025</p>
-            </div>
-          </li>
-          <li className={styles.notif_list_ele}>
-            <div
-              className={styles.notif_ele}
-            >
-              <p className="text-sm">
-                <span className="text-black dark:text-white">
-                  There are many variations
-                </span>{' '}
-                of passages of Lorem Ipsum available, but the majority have
-                suffered
-              </p>
-
-              <p className="text-xs">01 Dec, 2024</p>
+              <p className="text-xs">01 May, 2024</p>
             </div>
           </li>
         </ul>

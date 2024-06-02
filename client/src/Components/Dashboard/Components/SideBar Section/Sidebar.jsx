@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import './sidebar.scss'
 
 //imported images
@@ -16,14 +16,56 @@ import { IoBag } from "react-icons/io5";
 import { BsQuestionCircle } from "react-icons/bs";
 import { FaWpforms } from "react-icons/fa";
 import {   NavLink } from "react-router-dom";
+import { BiLeftArrowAlt } from "react-icons/bi";
+const Sidebar = ({sidebarOpen,setSidebarOpen}) => {
+    const trigger = useRef(null);
+    const sidebar = useRef(null);
 
-const Sidebar = () => {
+    useEffect(() => {
+        const clickHandler = ({ target }) => {
+          if (!sidebar.current || !trigger.current) return;
+          if (
+            !sidebarOpen ||
+            !sidebar.current.contains(target) ||
+            trigger.current.contains(target)
+          )
+            return;
+          setSidebarOpen(false);
+        };
+        document.addEventListener('click', clickHandler);
+        return () => document.removeEventListener('click', clickHandler);
+      });
+    
+      // close if the esc key is pressed
+      useEffect(() => {
+        const keyHandler = ({ keyCode }) => {
+          if (!sidebarOpen || keyCode !== 27) return;
+          setSidebarOpen(false);
+        };
+        document.addEventListener('keydown', keyHandler);
+        return () => document.removeEventListener('keydown', keyHandler);
+      });
+    
+    
   return (
-    <div className='sideBar grid'>
+    <div className={`sideBar grid ${sidebarOpen ? "open" : ""}`}
+        ref={sidebar}
+    >
 
         <div className="logoDiv flex">
             <img src={logo} alt="Image Name" />
             <h2>KSP</h2>
+            <div className="menu_close_wrapper">
+                <button className='menu_close_btn'
+                        onClick={(e)=>{
+                            e.stopPropagation();
+                            setSidebarOpen(prev => !prev);
+                        }}
+                        ref={trigger}
+                >
+                    <BiLeftArrowAlt/>
+                </button>
+            </div>
         </div>
 
         <div className="menuDiv">

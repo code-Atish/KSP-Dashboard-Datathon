@@ -5,8 +5,8 @@ import axios from "axios";
 import { useFetchData } from "../Details/ChartOne";
 import { config, getCrimeHotspots } from "../../utils/utility";
 import Loader from "../../ui/Dropdown/Loader";
+import styles from  "./map.module.scss";
 import {
-  useLoaderData,
   useNavigation,
 } from "react-router-dom";
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -49,28 +49,17 @@ const getCoordinates = async (place) => {
 
 export default function Map2() {
   const navigation = useNavigation();
-  const [position, setPosition] = useState([28.7041, 77.1025]);
   const [userLocation, setUserLocation] = useState([20.5937, 78.9629]); // Default to central India
-  const [isLocationFound, setIsLocationFound] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("true");
+  const [routingControl,setRoutingControl] = useState(null)
   // const beatData = useLoaderData();
   const [beatData,setBeatData] = useState(null);
   const [hotspots, setHotspots] = useState([]);
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          //   setPosition([latitude, longitude]);
-          setUserLocation([latitude, longitude]);
-          setIsLocationFound(true);
-        },
-        (error) => {
-          console.error("Error getting user's location: ", error);
-          setIsLocationFound(false);
-        }
-      );
-    }
-  }, []);
+  const handleChange = (event) => {
+        setSelectedValue(event.target.value);
+
+    };
+
 
   useEffect(()=>{
     if(!beatData)
@@ -156,14 +145,20 @@ export default function Map2() {
 
   return (
     <>
-      <SearchLocation setPosition={setPosition} />
-      <MapComponent
-        position={position}
-        setPosition={setPosition}
-        isLocationFound={isLocationFound}
-        userLocation={userLocation}
+    <div className={styles.option_selector}>
+        Select Option
+        <select value={selectedValue} onChange={handleChange}>
+            <option value = {true}>Crime hotspots</option>
+            <option value = {false}>Navigation</option>
+        </select>
+    </div>
+    {selectedValue=="false" && <SearchLocation userLocation={userLocation} setUserLocation={setUserLocation}/>}
+      {selectedValue=="true" && <MapComponent
         hotspots={hotspots}
-      />
+        selectedValue={selectedValue}
+        setRoutingControl={setRoutingControl}
+        userLocation={userLocation}
+      />}
     </>
   );
 }
