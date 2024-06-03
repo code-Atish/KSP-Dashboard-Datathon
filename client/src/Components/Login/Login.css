@@ -13,3 +13,9 @@
 padding : 5px 15px;
 border-radius: 10px;
 }
+
+@media screen and (max-width: 602px) {
+    .sample_cred_wrapper{
+        gap:0.5rem;
+    }
+}
