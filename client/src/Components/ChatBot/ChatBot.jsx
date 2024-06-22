@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 
-const powerbi = () => {
+const ChatBot = () => {
   const resizeIframe = () => {
-    const iframe = document.getElementById("powerBIReport");
+    const iframe = document.getElementById("ChatBot");
     const container = iframe.parentElement;
     iframe.width = container.clientWidth;
     iframe.height = container.clientHeight;
   };
   useEffect(() => {
-
     // Call resizeIframe when the window is resized
     window.addEventListener("resize", resizeIframe);
 
@@ -29,7 +28,7 @@ const powerbi = () => {
   return (
     <div>
       {/* <iframe
-        id="powerBIReport"
+        id="ChatBot"
         title="ksptestpowerbi"
         width="1150"
         height="900"
@@ -39,17 +38,15 @@ const powerbi = () => {
         onLoad={handleIframeLoad}
       ></iframe> */}
       <iframe
-        id="powerBIReport"
-        title="ASP & DYSP dashboard"
-        width="1180"
-        height="900"
-        src="https://app.powerbi.com/view?r=eyJrIjoiZDJmZmRlMTgtMGIzMi00M2QzLWEyNmMtNWJjN2M1NWM0NjgzIiwidCI6ImI1MzYyMTYxLTgyMWEtNDk3Mi04NGEwLTg2ZGQzNjA2OGVkOCJ9"
-        frameBorder={"0"}
-        allowFullScreen={true}
-        onLoad={handleIframeLoad}
-      ></iframe>
+        id="ChatBot"
+        src="https://app.vectorshift.ai/chatbots/embedded/66759e50b3baa63ecd056ebd?openChatbot=true"
+        width="1100px"
+        height="500px"
+        // style={{ border: 'none', position: 'fixed', bottom: '0', right: '0', margin: '10px' }}
+        allow="clipboard-read; clipboard-write"
+      />
     </div>
   );
 };
 
-export default powerbi;
+export default ChatBot;

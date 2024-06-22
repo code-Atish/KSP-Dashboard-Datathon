@@ -27,6 +27,13 @@ import SubordinateDetails from './Components/SubordinateDetails/Details/Details'
 import OfficersList from './Components/Officers/OfficersList';
 import FirList from './Components/FirDetails/FirList';
 import AddFir from './Components/FirDetails/AddFir';
+import AssignTasks from './Components/TaskAssignment/AssignTasks';
+import ActiveDuties from './Components/ActiveDuties/ActiveDuties';
+import Beats from './Components/Beats/Beats';
+import BeatList from './Components/Beats/BeatList';
+import BeatDashboard from './Components/Beats/BeatDashboard';
+import CaseDashboard from './Components/CourtMonitoring/CaseDashboard';
+import ChatBot from './Components/ChatBot/ChatBot';
 const apiUrl = import.meta.env.VITE_API_URL;
 
 // Define the ProtectedRoute component
@@ -131,6 +138,41 @@ const router = createBrowserRouter([
     element: <ProtectedRoute    element = {<Dashboard />} />,
     children: [
       {
+        path: "assigntasks",
+        // index: true,
+        element: <AssignTasks />,
+      },
+      {
+        path: "activeduties",
+        // index: true,
+        element: <ActiveDuties />,
+      },
+      {
+        path: "beatlogs",
+        // index: true,
+        element: <Beats />,
+      },
+      {
+        path: "beatdetails",
+        // index: true,
+        element: <BeatList />,
+      },
+      {
+        path: "beatdashboard",
+        // index: true,
+        element: <BeatDashboard />,
+      },
+      {
+        path: "case-related-dashboards",
+        // index: true,
+        element: <CaseDashboard />,
+      },
+      {
+        path: "chatbot",
+        // index: true,
+        element: <ChatBot/>,
+      },
+      {
         path: "home",
         // index: true,
         element: <Body />,
@@ -199,6 +241,41 @@ const router = createBrowserRouter([
     element: <div><ProtectedRoute element={<InspectorDash/>}/></div>,
     children: [
       {
+        path: "assigntasks",
+        // index: true,
+        element: <AssignTasks />,
+      },
+      {
+        path: "activeduties",
+        // index: true,
+        element: <ActiveDuties />,
+      },
+      {
+        path: "beatlogs",
+        // index: true,
+        element: <Beats />,
+      },
+      {
+        path: "beatdetails",
+        // index: true,
+        element: <BeatList />,
+      },
+      {
+        path: "beatdashboard",
+        // index: true,
+        element: <BeatDashboard />,
+      },
+      {
+        path: "case-related-dashboards",
+        // index: true,
+        element: <CaseDashboard />,
+      },
+      {
+        path: "chatbot",
+        // index: true,
+        element: <ChatBot/>,
+      },
+      {
         index: true, 
         path: 'home',
         element : <InspectorBody/>
@@ -257,6 +334,41 @@ const router = createBrowserRouter([
     element: <div><ProtectedRoute    element = {<SubinspectorDash />} /></div>,
     
     children: [
+      {
+        path: "assigntasks",
+        // index: true,
+        element: <AssignTasks />,
+      },
+      {
+        path: "activeduties",
+        // index: true,
+        element: <ActiveDuties />,
+      },
+      {
+        path: "beatlogs",
+        // index: true,
+        element: <Beats />,
+      },
+      {
+        path: "beatdetails",
+        // index: true,
+        element: <BeatList />,
+      },
+      {
+        path: "beatdashboard",
+        // index: true,
+        element: <BeatDashboard />,
+      },
+      {
+        path: "case-related-dashboards",
+        // index: true,
+        element: <CaseDashboard />,
+      },
+      {
+        path: "chatbot",
+        // index: true,
+        element: <ChatBot/>,
+      },
       {
         // index: true,
         path: 'home',

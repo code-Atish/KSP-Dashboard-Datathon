@@ -7,6 +7,7 @@ import { TbMessageCircle } from "react-icons/tb";
 import img from "../../../Assets/admin.png";
 import DropdownMenu from "../../../../../ui/Dropdown/Dropdown";
 import Popup from "../../../../../ui/Popup/Popup";
+import {  IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { IoMdMenu } from "react-icons/io";
 import { useLocation } from "react-router-dom";
 const Top = ({ setSidebarOpen }) => {
@@ -27,7 +28,7 @@ const Top = ({ setSidebarOpen }) => {
             <IoMdMenu />
           </button>
         </div>
-        {currentPath.includes("home") && (
+        { (
           <div className="title">
             <h1>Welcome to KSP Dashboard</h1>
             <p>Be Organised and Efficient</p>
@@ -41,7 +42,8 @@ const Top = ({ setSidebarOpen }) => {
 
         <div className="adminDiv flex">
           <button className="chat_btn">
-            <TbMessageCircle className="icon" />
+            {/* <TbMessageCircle className="icon" /> */}
+            <IoChatbubbleEllipsesOutline/>
           </button>
           <Popup />
 

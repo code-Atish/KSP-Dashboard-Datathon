@@ -19,8 +19,15 @@ const InspectorDash = () => {
            />  
           <Outlet />
         </div>
+        
       </div>
-      
+      {/* <iframe
+        src="https://app.vectorshift.ai/chatbots/embedded/66759e50b3baa63ecd056ebd?openChatbot=true"
+        width="500px"
+        height="500px"
+        style={{ border: 'none', position: 'fixed', bottom: '0', right: '0', margin: '10px' }}
+        allow="clipboard-read; clipboard-write"
+      /> */}
     </div>
   )
 }

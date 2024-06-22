@@ -1,14 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import styles from "./popup.module.css";
+import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_URL;
 export default function Popup() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [notifying, setNotifying] = useState(true);
-
+  const [notifying, setNotifying] = useState(false);
+  const [notifications, setNotifications] = useState([]);  
   const trigger = useRef(null);
 
   const dropdown = useRef(null);
 
+  const setNotificationRead = async (id) => {
+    console.log(id)
+    try {
+      const res = await axios.put(`${apiUrl}/setnotificationread`,{
+        id
+      },{
+        headers: {
+          "jwt_token": localStorage.getItem('token')
+        }
+      });
+      console.log(res.data);
+      fetchNotifications();
+    } catch (error) {
+      console.log('error while fetching : ', error)
+    }
+  }
   useEffect(() => {
     const clickHandler = ( {target} ) => {
       if (!dropdown.current) return;
@@ -33,7 +51,21 @@ export default function Popup() {
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
   });
-
+  const fetchNotifications = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/getnotifications`,{
+        headers: {
+          "jwt_token": localStorage.getItem('token')
+        }
+      });
+      setNotifications(res.data);
+    } catch (error) {
+      console.log('error while fetching : ', error)
+    }
+  };
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
   return (
     <div className={styles.notif_wrapper}
     ref={trigger}
@@ -43,15 +75,40 @@ export default function Popup() {
     }}>
       <button className={styles.notif_btn}>
         <IoIosNotificationsOutline/>
-        <span className={styles.unread_wrapper}>
+      {notifications.length > 0 && <span className={styles.unread_wrapper}>
         <span className={styles.unread_background}></span>
-        </span>
+        </span>}
       </button>
       <ul className={`${styles.notif_cont} ${ dropdownOpen === true ? styles.open : ''}`}
        ref={dropdown}
        onFocus={() => setDropdownOpen(true)}
        onBlur={() => setDropdownOpen(false)}>
-          <li className={styles.notif_list_ele}>
+        <li className={styles.notif_list_ele} style={{color : "rgb(138 153 175)"}}>
+          {notifications.length > 0 ? 'Notifications' : 'No notifications'}
+          </li>
+          {notifications.length > 0 && notifications.map((notification,index) =><li className={styles.notif_list_ele}  key={index} >
+            <div
+              className={styles.notif_ele}
+             
+            >
+                <span className={styles.notif_title}>
+                {notification.title}
+                </span>{' '}
+              <p className="text-sm">
+                 {notification.message}
+              </p>
+
+              <div className={styles.notif_date}>
+                <span>
+                  {(new Date(notification.notification_time)).toDateString()}
+                </span>
+                <button className="notif_section inspector-details" onClick={() => setNotificationRead(notification.id)}>
+                    Mark as Read
+                </button>  
+              </div>
+            </div>
+          </li>)}
+          {/* <li className={styles.notif_list_ele}>
             <div
               className={styles.notif_ele}
             >
@@ -107,7 +164,7 @@ export default function Popup() {
 
               <p className="text-xs">01 May, 2024</p>
             </div>
-          </li>
+          </li> */}
         </ul>
     </div>
   );

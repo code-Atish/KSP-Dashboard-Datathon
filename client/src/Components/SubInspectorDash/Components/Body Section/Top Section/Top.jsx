@@ -7,6 +7,7 @@ import Popup from '../../../../../ui/Popup/Popup';
 import { IoMdMenu } from "react-icons/io";
 
 import { useLocation } from 'react-router-dom';
+import { IoCafe, IoChatboxEllipsesOutline } from 'react-icons/io5';
 const Top = ({ setSidebarOpen }) => {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -25,7 +26,7 @@ const Top = ({ setSidebarOpen }) => {
             <IoMdMenu />
           </button>
         </div>
-        {currentPath.includes("home") && (
+        { (
           <div className="title">
             <h1>Welcome to KSP Dashboard</h1>
             <p>Be Organised and Efficient</p>
@@ -38,9 +39,10 @@ const Top = ({ setSidebarOpen }) => {
         </div> */}
 
         <div className="adminDiv flex">
-          <button className="chat_btn">
+          {/* <button className="chat_btn">
             <TbMessageCircle className="icon" />
-          </button>
+            <IoChatboxEllipsesOutline/>
+          </button> */}
           <Popup />
 
           {/* <div className="adminImage">

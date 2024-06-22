@@ -5,8 +5,10 @@ const { Pool } = require('pg');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwtGenerator = require('./utils/jwtGenerator')
-const  extractRank = require('./utils/utiltiyFuntions')
+const {getCurrentISTDateTimeISO,extractRank} = require('./utils/utiltiyFuntions')
 const authorize = require('./middleware/authorize')
+const cron = require('node-cron');
+const classNames = require('classnames');
 require('dotenv').config();
 
 
@@ -15,9 +17,9 @@ app.use(cors());
 
 //run the server
 app.listen(5000,'0.0.0.0',() => {
-    console.log('server started on port 5000');
+  loadTasks();
+  console.log('server started on port 5000');
 });
-
 //ceating database
 const pool = new Pool({
     // user: 'postgres',
@@ -33,6 +35,276 @@ app.get('/', (req, res) => {
     res.send(`<h1>hello world</h1>`);
 });
 
+let scheduledTasks = {};
+
+app.use(express.json());
+console.log(getCurrentISTDateTimeISO())
+// Load all active tasks from the database and schedule them on startup
+async function loadTasks() {
+  const query = 'SELECT * FROM dutyscheduler';
+
+  try {
+    const result = await pool.query(query);
+    const tasks = result.rows;
+    tasks.forEach((task) => {
+      scheduleTask(task);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
+// Function to schedule a task
+const scheduleTask = async (task) => {
+//   if (task.is_active) {
+    const taskId = cron.schedule(task.cron_time, async() => {
+      console.log(`Task ${task.title} is running`);
+      const isoDate = getCurrentISTDateTimeISO();
+      const query = `INSERT INTO duties (title, description,userid) VALUES ($1, $2, $3) RETURNING *`;
+//       const query = `UPDATE tasks SET "updatedAt" = $1, deadline= DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Kolkata') + INTERVAL '1 day' - INTERVAL '1 second'
+//  WHERE id = $2 RETURNING *`;
+      const values = [task.title, task.description, task.userid];
+      try {
+        const result = await pool.query(query, values);
+        const task = result.rows[0];
+        console.log(task)
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    scheduledTasks[task.id] = taskId;
+    console.log(`Task ${task.title} scheduled with cronTime ${task.cron_time}`);
+//   }
+};
+app.get('/api/gettime', async(req,res)=>{
+    const query = `SELECT * FROM duties`;
+    try {
+      const result = await pool.query(query);
+      const duties = result.rows;
+      res.json(duties);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching duties');
+    }
+})
+app.get('/api/gettask', async(req,res)=>{
+    const query = `SELECT * FROM duties`;
+    try {
+      const result = await pool.query(query);
+      const duties = result.rows;
+      res.json(duties);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching duties');
+    }
+})
+
+app.post('/api/schedule-task', async (req, res) => {
+    const { title, description,userid,cron_time, police_station } = req.body;
+    // const task_id = uuidv4();
+    const query = `INSERT INTO dutyscheduler (title, description,userid, cron_time,police_station) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+    const values = [title, description,userid,cron_time,police_station];
+  
+    try {
+      const result = await pool.query(query, values);
+      const task = result.rows[0];
+      await scheduleTask(task);
+      res.send(task);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error scheduling task');
+    }
+  });
+
+app.post('/api/getOnboardOfficers', async (req, res) => {
+    const { duty,cron_time } = req.body;
+    // const task_id = uuidv4();
+    
+    // const query = `SELECT * FROM tasks WHERE title = $1 AND cron_time = $2`;
+    const query = `SELECT distinct dt.id ,f.ioname, f.user_id
+                  FROM dutyscheduler dt
+                  JOIN firdetails f ON dt.userid = f.user_id
+                  WHERE dt.title = $1  AND dt.cron_time = $2;`;
+    const values = [duty,cron_time];
+    console.log(values)
+    // const newQuery = `Select distinct ioname,user_id from firdetails where user_id=$1 `;
+    
+    try {
+      const result = await pool.query(query, values);
+      // // res.send(result.rows[0]);
+      // console.log(result.rows[0])
+      // if(!result.rows[0]){
+      //   return res.send([]);
+      // }
+      // const newresult = await pool.query(newQuery, [result.rows[0].userid]);
+      res.send(result.rows);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching officers');
+    }
+  });
+
+  // Endpoint to stop and remove a task
+app.delete('/api/stop-task', async (req, res) => {
+  const { task_id } = req.query;
+  console.log({...req.body})
+  const query = 'DELETE FROM dutyscheduler WHERE id = $1 RETURNING *';
+  const values = [task_id];
+  try {
+    const result = await pool.query(query, values);
+    const task = result.rows[0];
+    if (task && scheduledTasks[task.id]) {
+      scheduledTasks[task.id].stop();
+      res.send(`Task ${task.title} has been stopped`);
+    } else {
+      res.send('Task not found or already stopped');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error stopping task');
+  }
+});
+
+app.post('/api/getactiveduties',authorize, async (req, res) => {
+    const userId = req.user.id
+    try {
+      const result = await pool.query('SELECT * FROM duties WHERE userid = $1', [userId]);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+    }
+  });
+app.post('/api/completeduty', async (req, res) => {
+    const {task_id} = req.body;
+    try {
+      const result = await pool.query(`UPDATE duties SET completed = 'true',notified = 'true'  WHERE id = $1 returning *`, [task_id]);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+    }
+  });
+
+app.get('/api/officers', async (req, res) => {
+    const search = req.query.search || '';
+    try {
+      const result = await pool.query('SELECT id, username FROM users WHERE username ILIKE $1', [`%${search}%`]);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+    }
+  });
+
+  // app.post('/api/assign-duty', async (req, res) => {
+  //   const { officerId, duty, day } = req.body;
+  //   try {
+  //     const result = await pool.query(
+  //       'INSERT INTO duties (officer_id, duty, day) VALUES ($1, $2, $3) RETURNING *',
+  //       [officerId, duty, day]
+  //     );
+  //     res.json(result.rows[0]);
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // });
+
+  // app.get('/api/officer-duties/:id', async (req, res) => {
+  //   const { id } = req.params;
+  //   try {
+  //     const result = await pool.query('SELECT duty, day FROM duties WHERE officer_id = $1', [id]);
+  //     res.json(result.rows);
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // });
+
+//Getting Notifications 
+app.post('/api/getofficersByPS', async (req, res) => {
+    const { PS } = req.body;
+    console.log(PS)
+    try {
+      //  is_read= 'false' AND 
+      const result = await pool.query(`SELECT * FROM dutyscheduler WHERE police_station = $1`, [PS]);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Error getting notifications');
+    }
+  });
+app.get('/api/getnotifications',authorize, async (req, res) => {
+  const  userId  = req.user.id
+    try {
+      //  is_read= 'false' AND 
+      console.log({userId})
+      const result = await pool.query(`SELECT * FROM notifications WHERE  is_read= 'false' AND  user_id = $1`, [userId]);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Error getting notifications');
+    }
+  });
+  
+//Setting Notifications 
+app.put('/api/setnotificationread', async (req, res) => {
+    const { id } = req.body;
+    try {
+      const result = await pool.query(`UPDATE notifications SET is_read = 'true' WHERE id = $1 returning *`, [id]);
+      res.json(result.rows[0]);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Error setting notification as read');
+    }
+  });
+
+// Add this new endpoint to handle patrol log submissions
+app.post('/api/submitbeatlog', authorize, async (req, res) => {
+  const { beatName, beatId, date, patrolStart, patrolEnd, observations } = req.body;
+  const userId = req.user.id; // Assuming you're using the authorize middleware
+
+  const query = `
+    INSERT INTO beat_logs (beat_name, beat_id, date, patrol_start, patrol_end, observations, user_id, created_at)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    RETURNING *
+  `;
+
+  const values = [
+    beatName,
+    beatId,
+    date,
+    patrolStart,
+    patrolEnd,
+    observations,
+    userId,
+    getCurrentISTDateTimeISO()
+  ];
+
+  try {
+    const result = await pool.query(query, values);
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error('Error submitting patrol log:', err);
+    res.status(500).json({ error: 'Failed to submit patrol log' });
+  }
+});
+
+app.post('/api/getbeatlogs', authorize, async (req, res) => {
+  const {id} = req.body;
+  const userId = id ||  req.user.id; // Assuming you're using the authorize middleware
+
+  const query = `select * from beat_logs where user_id=$1`;
+
+  const values = [
+    userId
+  ];
+  try {
+    const result = await pool.query(query, values);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error submitting patrol log:', err);
+    res.status(500).json({ error: 'Failed to submit patrol log' });
+  }
+});
 //register
 app.post('/api/register', async (req, res) => {
     const sentEmail = req.body.Email;
@@ -359,4 +631,55 @@ app.post('/api/getresponsetime',authorize, async (req, res) => {
         res.status(500).send({ error: 'Error finding officer data' });
     }
 });
+const cronJobexecute = async () => {
+  console.log('Cron job running...'); // Log cron job execution
+  // const currentISTDate = getISTDate();
+  const currentISTDate = (new Date());
+  console.log('Current IST Date:',currentISTDate ); // Log current IST date
+  try {
+      const res = await pool.query('SELECT * FROM duties WHERE completed = false AND notified = false AND deadline < $1', [currentISTDate]);
+      const tasks = res.rows;
+      console.log('Tasks:', tasks);
+      for (const task of tasks) {
+          const title= `Pending Task`;
+          const message = `Task ${task.title} is overdue`;
+          const Notification = await pool.query('INSERT INTO notifications (user_id, title, message) VALUES ($1, $2, $3) RETURNING * ', [task.userid,title, message]);
+          const user = Notification.rows[0];
+          console.log(Notification.rows[0])
+          await pool.query('UPDATE duties SET notified = true WHERE id = $1', [task.id]);
+
+          // if (user) {
+          //     const transporter = nodemailer.createTransport({
+          //         service: 'Gmail',
+          //         auth: {
+          //             user: 'atishsuslade@gmail.com',
+          //             pass: 'iawl ulog vmqg uuok',
+          //         },
+          //     });
+
+          //     const mailOptions = {
+          //         from: 'atishsuslade@gmail.com',
+          //         to: user.email,
+          //         subject: 'Task Deadline Notification',
+          //         text: `The task "${task.title}" is overdue. Please complete it as soon as possible.`,
+          //     };
+
+          //     transporter.sendMail(mailOptions, async (error, info) => {
+          //         if (error) {
+          //             console.error('Error sending email:', error);
+          //         } else {
+          //             console.log('Email sent:', info.response);
+
+          //             // Update task as notified
+          //             await client.query('UPDATE tasks SET notified = true WHERE id = $1', [task.id]);
+          //         }
+          //     });
+          // }
+      }
+  } catch (error) {
+      console.error('Error executing query:', error);
+  }
+}
+
+cron.schedule('* * * * *',cronJobexecute);
 module.exports = app

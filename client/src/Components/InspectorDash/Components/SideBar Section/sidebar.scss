@@ -1,24 +1,23 @@
 :root{
-
-  --PrimaryColor: hs1(94, 59%, 35%);
+  --PrimaryColor: hsl(94, 59%, 35%);
+  --PrimaryBlue : #1294f2;
   --HoverColor: #bdf094;
-  --paleGreen: hs1(96, 75%, 89%);
-  --whiteColor:hsl(0, 0%, 100%);
-  --blackColor:hs1(0, 0%, 18%);
-  --textColor:hs1(240, 1%, 48%);
-  --bgColor:hsl(220, 10%, 94%);
+  --paleGreen: hsl(96, 75%, 89%);
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackColor: hsl(0, 0%, 18%);
+  --textColor: hsl(240, 1%, 48%);
+  --bgColor: hsl(220, 10%, 94%);
   --greyText: rgb(190, 190, 190);
   --inputColor: hsl(330, 12%, 97%);
 
-  /* Font ang Typography */
-  --biggestFontSize: 2.frem;
+  /* Font and Typography */
+  --biggestFontSize: 2rem;
   --h1FontSize: 1.5rem;
   --h2FontSize: 1.25rem;
   --h3FontSize: 1rem;
   --normalFontSize: .938rem;
   --smallFontSize: .813rem;
   --smallestFontSize: .75rem;
-
 }
 
 .sideBar{
@@ -28,203 +27,222 @@
   height: 100%;
   gap: 3rem;
   overflow: auto;
-  scrollbar-width:none;
+  scrollbar-width: none;
   transition: linear 200ms;
   min-width: 170px;
   z-index: 1002;
-
+  
   .logoDiv{
-      padding: 1.5rem 1.5rem 0;
-      cursor: pointer;
+    padding: 1.5rem 1.5rem 0;
+    cursor: pointer;
 
-      img{
-          max-width: 20px;
-          margin-right: .5rem;
-          background: var(--inputColor);
-          border-radius: 2px;
-          padding: .1rem;
-      }
+    img{
+      max-width: 20px;
+      margin-right: .5rem;
+      background: var(--inputColor);
+      border-radius: 2px;
+      padding: .1rem;
+    }
 
-      h2{
-        font-size: var(--h2FontSize);
-        color: var(--PrimaryColor);
-      }
-      .menu_close_wrapper{
-        margin-left:auto;
-        display: none;
-      }
+    h2{
+      font-size: var(--h2FontSize);
+      color: var(--PrimaryColor);
+    }
+    
+    .menu_close_wrapper{
+      margin-left: auto;
+      display: none;
+    }
 
-      .menu_close_btn{
-        display: flex;
-        padding: 2px;
-        font-size: 25px;
-        background: white;
-        color: gray;
-        border-radius: 6px;
-        border: 2px solid var(--border-stoke);
-        margin-left: auto;
-        transition:linear 100ms;
+    .menu_close_btn{
+      display: flex;
+      padding: 2px;
+      font-size: 25px;
+      background: white;
+      color: gray;
+      border-radius: 6px;
+      border: 2px solid var(--border-stoke);
+      margin-left: auto;
+      transition: linear 100ms;
 
-            &:hover{
-              background-color: #eef2f6;
-              color:#3C50E0
-            }
+      &:hover{
+        background-color: #eef2f6;
+        color: #3C50E0;
       }
+    }
   }
 
   .menuDiv, .settingsDiv{
     .divTitle{
       font-size: var(--h3FontSize);
-        color: var(--blackColor);
-        padding: 0 1.5rem 1.5rem;
-        padding-top: 25px;
-      }
+      color: var(--blackColor);
+      padding: 0 1.5rem 1.5rem;
+      padding-top: 25px;
+    }
 
-      .menuLists{
-        .listItem{
-          padding: .7rem 1.5rem;
-          width: 100%;
-          position: relative;
+    .menuLists{
+      .listItem{
+        padding: .7rem 1.5rem;
+        width: 100%;
+        position: relative;
 
-          &::before{
-            position: absolute;
-            content: '';
-            height: 0;
-            left: 0;
-            width: 5px;
-            bottom: 0;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius:10px;
-            background: var(--greyText);
+        &::before{
+          position: absolute;
+          content: '';
+          height: 0;
+          left: 0;
+          width: 5px;
+          bottom: 0;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+          background: var(--greyText);
+        }
 
+        .menuLink{
+          color: var(--greyText);
+          font-weight: 500;
+          transition: 0;
+          padding: 0.5rem 0.25rem;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
 
+          .icon{
+            margin-right: .5rem;
           }
 
-          .menuLink{
-            color: var(--greyText);
-            font-weight: 500;
-            transition: 0;
-            padding:0.5rem 00.25rem;
-            border-radius: 10px;
-
-            .icon{
-              margin-right: .5rem;
-            }
+          &:hover{
+            color: var(--PrimaryColor);
+            cursor: pointer;
+          }
         }
 
         .active.menuLink{
-          // color: var(--PrimaryColor);
-          background-color:#1294F2;
+          background-color:var(--PrimaryBlue);
           transition: 0;
-          color:white;
+          color: white;
         }
+        
         &.active.menuLink::before{
           height: 100%;
           transition: .3s ease;
         }
 
-        &:hover .active.menuLink{
-          color: white;
-          transition: 0;
-        }
-
         &:hover .menuLink{
           color: var(--PrimaryColor);
           transition: 0;
-
         }
 
         &:hover::before{
           height: 100%;
           transition: .3s ease;
         }
+      }
+
+      .dropdownMenu {
+        background: var(--whiteColor);
+        padding: 0.5rem;
+        border-radius: 5px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        
+        .menuLink {
+          padding: 0.5rem 1rem;
+          margin: 0.5rem 0;
+          background-color: transparent;
+          color: var(--textColor);
+          transition: background-color 0.3s, color 0.3s;
+          cursor: pointer;
+
+          &:hover {
+            background-color: var(--HoverColor);
+            color: var(--blackColor);
+          }
+        }
+      }
     }
   }
-}
 
-.sideBarCard{
-  width: 100%;
-  padding: 1rem;
-  text-align: center;
-  position: relative;
-
-  .icon{
-    position: absolute;
-    background: var(--HoverColor);
-    border: 10px solid var(--whiteColor);
-    font-size: 3rem;
-    border-radius: 50%;
-    top: -8px;
-    right: 50%;
-    transform: translate(50%);
-    z-index: 100;
-  }
-
-  .cardContent{
-    position: relative;
+  .sideBarCard{
+    width: 100%;
     padding: 1rem;
-    background: var(--bgColor);
-    border-radius: 10px;
-    overflow: hidden;
+    text-align: center;
+    position: relative;
 
-    h3{
-      font-size: var(--h3FontSize);
-      margin-top: 1rem;
-      padding: 1rem 0;
-      font-weight: 800;
-      color: var(--blackColor);
-
-    }
-
-    p{
-      font-size: var(--normalFontSize);
-      color: var(--textColor);
-      padding-bottom: 1rem;
-      font-weight: 500;
-    }
-
-    .btn{
-      position: relative;
-      color: var(--textColor);
-      z-index: 1000;
-    }
-
-    .circle1, .circle2{
+    .icon{
       position: absolute;
       background: var(--HoverColor);
+      border: 10px solid var(--whiteColor);
+      font-size: 3rem;
       border-radius: 50%;
-      opacity: .7;
+      top: -8px;
+      right: 50%;
+      transform: translate(50%);
+      z-index: 100;
     }
 
-    .circle1{
-      height: 100px;
-      width: 100px;
-      top: -50px;
-      left: -50px;
-    }
+    .cardContent{
+      position: relative;
+      padding: 1rem;
+      background: var(--bgColor);
+      border-radius: 10px;
+      overflow: hidden;
 
-    
-    .circle2{
-      height: 150px;
-      width: 150px;
-      top: -80px;
-      right: -70px;
-      z-index: 1;
-    }
+      h3{
+        font-size: var(--h3FontSize);
+        margin-top: 1rem;
+        padding: 1rem 0;
+        font-weight: 800;
+        color: var(--blackColor);
+      }
 
+      p{
+        font-size: var(--normalFontSize);
+        color: var(--textColor);
+        padding-bottom: 1rem;
+        font-weight: 500;
+      }
+
+      .btn{
+        position: relative;
+        color: var(--textColor);
+        z-index: 1000;
+      }
+
+      .circle1, .circle2{
+        position: absolute;
+        background: var(--HoverColor);
+        border-radius: 50%;
+        opacity: .7;
+      }
+
+      .circle1{
+        height: 100px;
+        width: 100px;
+        top: -50px;
+        left: -50px;
+      }
+
+      .circle2{
+        height: 150px;
+        width: 150px;
+        top: -80px;
+        right: -70px;
+        z-index: 1;
+      }
+    }
   }
-}
 }
 
 @media screen and (max-width: 1050px) {
   .sideBar{
-    position:absolute;
+    position: absolute;
     transform: translateX(-100%);
   }
+  
   .sideBar.open{
     transform: translateX(0%);
   }
-  
+
   .sideBar .logoDiv .menu_close_wrapper{
     display: block;
   }

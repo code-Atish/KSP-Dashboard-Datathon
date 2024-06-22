@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const powerbi = () => {
+const CaseDashboard = () => {
   const resizeIframe = () => {
     const iframe = document.getElementById("powerBIReport");
     const container = iframe.parentElement;
@@ -43,7 +43,7 @@ const powerbi = () => {
         title="ASP & DYSP dashboard"
         width="1180"
         height="900"
-        src="https://app.powerbi.com/view?r=eyJrIjoiZDJmZmRlMTgtMGIzMi00M2QzLWEyNmMtNWJjN2M1NWM0NjgzIiwidCI6ImI1MzYyMTYxLTgyMWEtNDk3Mi04NGEwLTg2ZGQzNjA2OGVkOCJ9"
+        src="https://app.powerbi.com/view?r=eyJrIjoiZDJkYzk5NTItYzBiMi00NmQ0LTliNjMtYWE5ZmQ2NWVlYTVmIiwidCI6ImI1MzYyMTYxLTgyMWEtNDk3Mi04NGEwLTg2ZGQzNjA2OGVkOCJ9"
         frameBorder={"0"}
         allowFullScreen={true}
         onLoad={handleIframeLoad}
@@ -52,4 +52,4 @@ const powerbi = () => {
   );
 };
 
-export default powerbi;
+export default CaseDashboard;

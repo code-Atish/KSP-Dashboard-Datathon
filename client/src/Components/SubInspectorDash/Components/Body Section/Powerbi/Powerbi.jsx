@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 
 const powerbi = () => {
+  const resizeIframe = () => {
+    const iframe = document.getElementById("powerBIReport");
+    const container = iframe.parentElement;
+    iframe.width = container.clientWidth;
+    iframe.height = container.clientHeight;
+  };
   useEffect(() => {
-    const resizeIframe = () => {
-      const iframe = document.getElementById("powerBIReport");
-      const container = iframe.parentElement;
-      iframe.width = container.clientWidth;
-      iframe.height = container.clientHeight;
-    };
 
     // Call resizeIframe when the window is resized
     window.addEventListener("resize", resizeIframe);
@@ -53,7 +53,7 @@ const powerbi = () => {
         title="SubInspector Dashboard"
         width="1150"
         height="900"
-        src="https://app.powerbi.com/view?r=eyJrIjoiMDExMDEyMDctZThkMi00NzMxLWI1NzctYTM1Nzk1ZTBmOTI4IiwidCI6ImI1MzYyMTYxLTgyMWEtNDk3Mi04NGEwLTg2ZGQzNjA2OGVkOCJ9"
+        src="https://app.powerbi.com/view?r=eyJrIjoiZDQxM2FjZWQtODcwZi00OWZmLWFlZDgtNWRjN2U2MTJkYThiIiwidCI6ImI1MzYyMTYxLTgyMWEtNDk3Mi04NGEwLTg2ZGQzNjA2OGVkOCJ9"
         frameborder="0"
         allowFullScreen="true"
         onLoad={handleIframeLoad}
